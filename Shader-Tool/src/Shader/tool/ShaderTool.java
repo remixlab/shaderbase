@@ -30,8 +30,10 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener; 
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,6 +41,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton; 
 import javax.swing.JFrame; 
 import javax.swing.JLabel; 
@@ -70,6 +73,13 @@ public class ShaderTool extends JFrame implements Tool{
  JButton connect;
  JButton next;
  int conta =0; 
+ byte[] image = null;
+ Image rpta=null;
+ Blob imagen=null;
+ BufferedImage Picture1;
+ JLabel picLabel;
+ ImageIcon one;
+
   
 
  
@@ -107,6 +117,7 @@ visual.add(codevisual = new JTextArea(code));
 JScrollPane textScroll=new JScrollPane(codevisual,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 visual.add(textScroll); 
+
 window.add(visual);
 
 JPanel filename = new JPanel();
@@ -128,7 +139,23 @@ connect.addActionListener(new ActionListener() {
     name.setText("shader"); //Adicionar Función nombre per QUERY
     save.setEnabled(true);  
     name1 = name.getText();
-    visual.setVisible(true);    }
+   
+    picLabel = new JLabel();
+    
+    one = new ImageIcon(rpta);
+    //picLabel = new JLabel(new ImageIcon(rpta));
+    //one.getImage().flush();
+    picLabel.setIcon(one);
+   
+    //picLabel.setIcon( new ImageIcon(rpta));
+    
+    visual.add(picLabel);
+    visual.setVisible(true);    
+    
+    
+    
+    
+    }
   });
 
 next = new JButton("Next");
@@ -217,20 +244,42 @@ public void com(){
         //Intentamos conectarnos a la base de Datos en este caso una base llamada temp
         System.out.println("Connecting Shader DB...");
         Connection con = DriverManager.getConnection(
-        //"jdbc:mysql://localhost/TESISPRUEBA", "root", "@1RainbowSix"
+        "jdbc:mysql://localhost/TESISPRUEBA", "root", "@1RainbowSix"
         //"jdbc:mysql://mysql15.000webhost.com/a4278501_shader", "a4278501_anfgo", "@shader"            		
         //"jdbc:mysql://mysql.serversfree.com/u514037168_sha", "u514037168_anf", "@shader"
-        "jdbc:mysql://sql3.freesqldatabase.com:3306/sql316268", "sql316268", "uL9!pA6%"         
+        //"jdbc:mysql://sql3.freesqldatabase.com:3306/sql316268", "sql316268", "uL9!pA6%"         
         		
         );
         System.out.println("Connected Shader DB");
+        
+        
+        //IMAGEN
+        
+        rpta=null;
+        Statement stmtimg = con.createStatement();
+        ResultSet imagen1 = stmtimg.executeQuery("SELECT idCodigo, Imagen FROM codigo WHERE idCodigo ="+conta);
+        System.out.println("Exc Query Image");
+        
+                
+        
+        while(imagen1.next()){
+        imagen = imagen1.getBlob("Imagen");
+        rpta= javax.imageio.ImageIO.read(imagen.getBinaryStream());
+       
+        }
+        //while(imagen.next()) {
+        //    image = imagen.getBytes("myimage");
+       // }
+        
+        //CODIGO (FRAGMENTO)
+        
         Statement stmt = con.createStatement();
-        ResultSet codigo1 = stmt.executeQuery("SELECT idCodigo, Codigo FROM codigo WHERE idCodigo ="+conta);
+        ResultSet codigo1 = stmt.executeQuery("SELECT idCodigo, Fragment FROM codigo WHERE idCodigo ="+conta);
         System.out.println("Exc Query");
         while (codigo1.next()) {
         		      
-        	code = codigo1.getString("CODIGO");
-        	System.out.println(codigo1.getString("CODIGO"));
+        	code = codigo1.getString("FRAGMENT");
+        	System.out.println(codigo1.getString("FRAGMENT"));
         	
        	
         		      //System.out.println("Nombre: " + resultado.getString("nombre"));
@@ -255,8 +304,8 @@ public void nextquery(){
 
 	//
 	code = null;
-	codevisual.setText("");
-	
+	picLabel.setIcon(null);
+	rpta = null;
 	
 	//
 	
@@ -268,4 +317,4 @@ public void nextquery(){
 }
 
  
-	
+		
