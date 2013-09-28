@@ -65,21 +65,24 @@ public class ShaderTool extends JFrame implements Tool{
  Editor editor;
  
  //Variables 
- String code = "";
+// String code = "";
+  String code = null;
+  String descrip;  
  JTextArea codevisual; 
  JButton save;
  JTextField name;
  String name1;
+ String namesql;
  JButton connect;
  JButton next;
- int conta =0; 
+ int conta =1; 
  byte[] image = null;
  Image rpta=null;
  Blob imagen=null;
  BufferedImage Picture1;
  JLabel picLabel;
  ImageIcon one;
-
+ 
   
 
  
@@ -97,17 +100,21 @@ window.setBorder(new EmptyBorder(5, 5, 5, 5));
 inicio.add(window, BorderLayout.CENTER);
 window.setLayout(new BoxLayout(window, BoxLayout.Y_AXIS));
 
-String labelText =
-"Descripcion------------------------------------------------------------------------------------------";
 
 
-JTextArea textarea = new JTextArea(labelText);
+String labelText = descrip;
+//"Descripcion------------------------------------------------------------------------------------------";
+
+
+final JTextArea textarea = new JTextArea(labelText);
 textarea.setBorder(new EmptyBorder(5, 5, 10, 5));
 textarea.setBackground(null);
 textarea.setEditable(false);
 textarea.setHighlighter(null);
 textarea.setFont(new Font("Dialog", Font.PLAIN, 12));
 window.add(textarea);
+
+
 
 final JPanel visual = new JPanel();
 visual.add(new JLabel("Code:"));
@@ -117,38 +124,73 @@ visual.add(codevisual = new JTextArea(code));
 JScrollPane textScroll=new JScrollPane(codevisual,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 visual.add(textScroll); 
-
+final JLabel picLabel = new JLabel();
 window.add(visual);
 
-JPanel filename = new JPanel();
-filename.add(new JLabel("Filename:"));
+JPanel shadername = new JPanel();
+shadername.add(new JLabel("Shader Name:"));
 final JTextField name;
-filename.add(name = new JTextField(20));
-filename.add(new JLabel(".glsl"));
-window.add(filename);
+shadername.add(name = new JTextField(20));
+//shadername.add(new JLabel(".glsl"));
+window.add(shadername);
+
 
 JPanel buttons = new JPanel();
 connect = new JButton("Connect");
 connect.addActionListener(new ActionListener() {
     public void actionPerformed(ActionEvent e) {
-      com();
+    //conta = conta + 1;	
+    	
+    //picLabel = new JLabel();
+    
+    if (code==null){
+    
+    	conta = 1;
+    
+    }
+        
+    else {
+    
+    	conta = conta +1;
+    	
+    }	  	    
+    
+    
+    rpta = null;
+    code = null;
+    picLabel.setIcon(null);
+    visual.setVisible(false);
+    //one = new ImageIcon(rpta);
+    //picLabel.setIcon(one);
+    //visual.add(picLabel);
+    //nextquery();
+    
+   
+       	
+    com();
     System.out.println("Testing");  
     System.out.println(code);
     codevisual.setText(code);
     //codevisual.append(code);
-    name.setText("shader"); //Adicionar Función nombre per QUERY
+    name.setText(namesql); //Adicionar Función nombre per QUERY
     save.setEnabled(true);  
-    name1 = name.getText();
+    name1 = namesql;
+    textarea.setText(descrip);   
+    
    
-    picLabel = new JLabel();
     
     one = new ImageIcon(rpta);
     //picLabel = new JLabel(new ImageIcon(rpta));
     //one.getImage().flush();
-    picLabel.setIcon(one);
-   
-    //picLabel.setIcon( new ImageIcon(rpta));
     
+    //picLabel.setIcon(null);
+    
+    picLabel.setIcon(one);
+    
+    
+   
+   //picLabel.setIcon( new ImageIcon(rpta));
+   // window.add(textarea);
     visual.add(picLabel);
     visual.setVisible(true);    
     
@@ -158,20 +200,30 @@ connect.addActionListener(new ActionListener() {
     }
   });
 
-next = new JButton("Next");
+next = new JButton("New");
 next.addActionListener(new ActionListener() {
     public void actionPerformed(ActionEvent e) {
-     if (code==null){
-    	 conta = 1;
+   
+    
+    
+    if (code==null){
+    	conta = 1;
      }
      else {
     	conta = conta +1;
      }
+     
+    
      visual.setVisible(false);
      nextquery();
+    
+    
+    
     }
+    
   });
 
+    	
 save = new JButton("Save");
 save.addActionListener(new ActionListener() {
     public void actionPerformed(ActionEvent e) {
@@ -191,7 +243,9 @@ window.add(buttons);
  }
 
 public void run() {
-    setVisible(true);
+    //com();
+	
+	setVisible(true);
   }//end run
 
 public void build(){
@@ -204,7 +258,7 @@ public void build(){
 	
 	System.out.println(filename);
 	    if (filename.length() == 0) {
-	      JOptionPane.showMessageDialog(this, "Enter a file name for the font.",
+	      JOptionPane.showMessageDialog(this, "Enter a file name.",
 	                                    "Lameness", JOptionPane.WARNING_MESSAGE);
 	      return;
 	    }
@@ -234,20 +288,30 @@ public void build(){
 	}//end build
 
 public void com(){
-	//conta = 1;
+	
+	
+	/*
+	if (code==null){
+    	conta = 1;
+     }
+     else {
+    	conta = conta +1;
+     }
+    */
+	
 	System.out.println("Connecting .....");
 	try {
         //Cargamos el puente JDBC =&gt; Mysql
         System.out.println("Loading JDBC driver...");
         Class.forName("com.mysql.jdbc.Driver");
 
-        //Intentamos conectarnos a la base de Datos en este caso una base llamada temp
+        //Intentamos conectarnos a la base de Datos
         System.out.println("Connecting Shader DB...");
         Connection con = DriverManager.getConnection(
-        "jdbc:mysql://localhost/TESISPRUEBA", "root", "@1RainbowSix"
+        //"jdbc:mysql://localhost/TESISPRUEBA", "root", "@1RainbowSix"
         //"jdbc:mysql://mysql15.000webhost.com/a4278501_shader", "a4278501_anfgo", "@shader"            		
         //"jdbc:mysql://mysql.serversfree.com/u514037168_sha", "u514037168_anf", "@shader"
-        //"jdbc:mysql://sql3.freesqldatabase.com:3306/sql316268", "sql316268", "uL9!pA6%"         
+        "jdbc:mysql://sql4.freesqldatabase.com:3306/sql419163", "sql419163", "nB7!lB7*"         
         		
         );
         System.out.println("Connected Shader DB");
@@ -271,6 +335,36 @@ public void com(){
         //    image = imagen.getBytes("myimage");
        // }
         
+        //NOMBRE SHADER
+        
+        namesql=null;
+        Statement stmtname = con.createStatement();
+        ResultSet namesqls = stmtname.executeQuery("SELECT idCodigo, Nombre FROM codigo WHERE idCodigo ="+conta);
+       // System.out.println("Exc Query Image");
+        
+                
+        
+        while(namesqls.next()){
+          	namesql = namesqls.getString("NOMBRE");
+        	System.out.println(namesqls.getString("NOMBRE"));
+       
+        }
+        
+        //DESCRIPCION PRUEBA
+        
+        descrip=null;
+        Statement stmtdescrip = con.createStatement();
+        ResultSet descripsqls = stmtname.executeQuery("SELECT idDescripcion, Descripcion FROM descripcion WHERE idDescripcion ="+conta);
+        System.out.println("Exc Query Descripcion");
+        
+                
+        
+        while(descripsqls.next()){
+          	descrip = descripsqls.getString("DESCRIPCION");
+        	System.out.println(descripsqls.getString("DESCRIPCION"));
+       
+        }
+        
         //CODIGO (FRAGMENTO)
         
         Statement stmt = con.createStatement();
@@ -286,6 +380,7 @@ public void com(){
         		      //System.out.println("Clave: " + resultado.getString("clave"));
         		  }
         
+            
         //String codigo2 = codigo2.setText(codigo1.getString("Codigo"));
         //System.out.println(codigo1.getString("CODIGO"));          
         
@@ -303,9 +398,12 @@ public void nextquery(){
 	System.out.println(conta);
 
 	//
+	
+		
 	code = null;
 	picLabel.setIcon(null);
 	rpta = null;
+	
 	
 	//
 	
@@ -317,4 +415,4 @@ public void nextquery(){
 }
 
  
-		
+	
