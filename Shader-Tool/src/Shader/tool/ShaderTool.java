@@ -25,14 +25,18 @@
 
 package Shader.tool;
  
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Robot;
 import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener; 
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -40,6 +44,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton; 
@@ -55,6 +60,11 @@ import java.sql.*;
 
 import processing.app.*;
 import processing.app.tools.*;
+import processing.app.Base;
+import processing.app.Editor;
+import processing.app.Sketch;
+import processing.app.SketchCode;
+import processing.core.PApplet;
  
 /**
  * GUI tool for shader program
@@ -79,9 +89,12 @@ public class ShaderTool extends JFrame implements Tool{
  byte[] image = null;
  Image rpta=null;
  Blob imagen=null;
- BufferedImage Picture1;
+  BufferedImage Picture1;
  JLabel picLabel;
  ImageIcon one;
+ String pdecode;
+ Blob imgprede;
+ Image rpta1=null;
  
   
 
@@ -224,7 +237,7 @@ next.addActionListener(new ActionListener() {
   });
 
     	
-save = new JButton("Save");
+save = new JButton("Export");
 save.addActionListener(new ActionListener() {
     public void actionPerformed(ActionEvent e) {
       build();
@@ -246,12 +259,28 @@ public void run() {
     //com();
 	
 	setVisible(true);
+	
+	
+	//Config Preliminar (NUEVA)
+	
+	Sketch sketch = editor.getSketch();
+	File sketchFolder = sketch.getFolder();
+	File sketchbookFolder = Base.getSketchbookFolder();
+
+	
+	
   }//end run
 
 public void build(){
 	
 	System.out.println("Saving");
 	//System.out.println(name1);
+	
+	editor.getBase();
+	editor.getBase();
+	String tab0code = pdecode;
+	editor.setText(tab0code);
+	
 	
 	String filename = name1.trim();
 
@@ -267,6 +296,31 @@ public void build(){
 	    }
 
 	    File folder = editor.getSketch().prepareDataFolder();
+	    
+        //Salvar rpta1
+	    
+	    ImageIcon temp = new ImageIcon(rpta1);
+	    BufferedImage image = new BufferedImage(
+	    temp.getIconWidth(), temp.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+
+	    // create a graphics context from the BufferedImage and draw the icon's image into it.
+	    Graphics g = image.createGraphics();
+	    g.drawImage(temp.getImage(),0,0,null);
+	    g.dispose();
+	    
+	    
+	    File imgpre = new File(folder, "img.jpg");
+	    try {
+			imgpre.createNewFile();
+			ImageIO.write(image, "jpg", imgpre);	
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	        
+	    
+	    //
+	    
 	    String f = code;
 	    try{
 	    
@@ -276,6 +330,8 @@ public void build(){
         bw.newLine();
         bw.close();
 	    }
+	    
+	    
 	    catch (IOException e)
 	    {
 	    System.out.println("Exception ");
@@ -284,7 +340,17 @@ public void build(){
 	    //File file = new File (folder, filename);
 	    //f.save((new File(folder, filename));
 
-	
+	try {
+		Robot robot = new Robot();
+		robot.delay(5000);
+		robot.keyPress(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_R);
+		robot.keyRelease(KeyEvent.VK_R);
+		robot.keyRelease(KeyEvent.VK_CONTROL);
+	} catch (AWTException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} 
 	}//end build
 
 public void com(){
@@ -308,9 +374,7 @@ public void com(){
         //Intentamos conectarnos a la base de Datos
         System.out.println("Connecting Shader DB...");
         Connection con = DriverManager.getConnection(
-        //"jdbc:mysql://localhost/TESISPRUEBA", "root", "@1RainbowSix"
-        //"jdbc:mysql://mysql15.000webhost.com/a4278501_shader", "a4278501_anfgo", "@shader"            		
-        //"jdbc:mysql://mysql.serversfree.com/u514037168_sha", "u514037168_anf", "@shader"
+    
         "jdbc:mysql://sql4.freesqldatabase.com:3306/sql419163", "sql419163", "nB7!lB7*"         
         		
         );
@@ -380,7 +444,39 @@ public void com(){
         		      //System.out.println("Clave: " + resultado.getString("clave"));
         		  }
         
+        
+        // CODIGO PDE
+        
+     
+        Statement stmtpde = con.createStatement();
+        ResultSet codigopde = stmtpde.executeQuery("SELECT idCodigo, PDE FROM codigo WHERE idCodigo ="+conta);
+        System.out.println("Exc Query");
+        while (codigopde.next()) {
+        		      
+        	pdecode = codigopde.getString("PDE");
+        	System.out.println(codigopde.getString("PDE"));
+        	
+       	
+        		      //System.out.println("Nombre: " + resultado.getString("nombre"));
+        		      //System.out.println("Clave: " + resultado.getString("clave"));
+        		  }
+        
             
+        // CODIGO IMG PREDETERMINADA
+        
+        
+        Statement stmtimgpred = con.createStatement();
+        ResultSet imgpred = stmtimgpred.executeQuery("SELECT idImagen, Imagen FROM imagen WHERE idImagen ="+conta);
+        System.out.println("Exc Query");
+        while (imgpred.next()) {
+        		      
+        	imgprede = imgpred.getBlob("Imagen");
+            rpta1= javax.imageio.ImageIO.read(imgprede.getBinaryStream());
+       	
+        		      //System.out.println("Nombre: " + resultado.getString("nombre"));
+        		      //System.out.println("Clave: " + resultado.getString("clave"));
+        		  }
+        
         //String codigo2 = codigo2.setText(codigo1.getString("Codigo"));
         //System.out.println(codigo1.getString("CODIGO"));          
         
@@ -394,7 +490,7 @@ public void com(){
 	
 		
 	}//end com
-public void nextquery(){
+	public void nextquery(){
 	System.out.println(conta);
 
 	//
