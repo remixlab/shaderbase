@@ -76,8 +76,8 @@ public void run() {
 	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	 
 	        //Create and set up the content pane.
-	        Wizard demo = new Wizard();
-	        demo.addComponentToPane(frame.getContentPane());
+	        Wizard ini = new Wizard();
+	        ini.addComponentToPane(frame.getContentPane());
 	 
 	        //Display the window.
 	        

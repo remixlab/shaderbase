@@ -112,7 +112,7 @@ public class Wizard  {
         //JPanel buttons = new JPanel();
         
                
-        //Cambio
+        //Change
         bottomHalf.add(outputPane, BorderLayout.CENTER);
         	//XXX: next line needed if bottomHalf is a scroll pane:
         	//bottomHalf.setMinimumSize(new Dimension(400, 50));
@@ -121,19 +121,9 @@ public class Wizard  {
         //bottomHalf.add(search);
         splitPane.add(bottomHalf);
         
+           
         
-        //labelText="Descripcion--------------------------------------------------------";
-        //final JTextArea textarea = new JTextArea(labelText);
-      
-//        textarea.setBorder(new EmptyBorder(5, 5, 10, 5));
-        textarea.setBackground(null);
-        textarea.setEditable(false);
-        //textarea.setHighlighter(null);
-        textarea.setFont(new Font("Dialog", Font.PLAIN, 12));
-
-        
-        
-        //Create the "cards".
+        //Create Menu.
        JPanel card1 = new JPanel() {
             //Make the panel wider than it really needs, so
             //the window's wide enough for the tabs to stay
