@@ -1,5 +1,7 @@
 package Shader.tool;
 
+import Shader.tool.Save;
+
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -12,6 +14,8 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -39,6 +44,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import processing.app.Editor;
+
 
 
 
@@ -51,23 +58,34 @@ public class Wizard  {
 	String descrip; 
 	ListSelectionModel listSelectionModel;
 	String[] listadata;
+	String[] prueba = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"};
 	int cuentat = 0;
-	int shaderse;
+	String shaderse;
 	JButton save;
 	JButton search;
 	Image rpta=null;
 	Blob imagen=null;
 	final JLabel picLabel = new JLabel();
     final static String BUTTONPANEL = "Shader List";
-    final static String TEXTPANEL = "Search";
+    final static String TEXTPANEL = "Options";
     final static int extraWindowWidth = 100;
     final JPanel card1 = new JPanel();
     final JPanel card2 = new JPanel();
     String labelText;
     final JTextArea textarea = new JTextArea();
+    JTextField searchtext;
+    private Editor editor = null;
     
     
-    public void addComponentToPane(Container pane) {
+    public Wizard(Editor editor) {
+    	this.editor = editor;
+    	
+    	    	
+    	// TODO Auto-generated constructor stub
+	}
+
+
+	public void addComponentToPane(Container pane) {
         JTabbedPane tabbedPane = new JTabbedPane();
         com();
         
@@ -104,27 +122,37 @@ public class Wizard  {
         topHalf.add(listContainer);
         //topHalf.add(tableContainer);
  
-        topHalf.setMinimumSize(new Dimension(100, 50));
-        topHalf.setPreferredSize(new Dimension(400, 135));
+        //topHalf.setMinimumSize(new Dimension(100, 50));
+        topHalf.setPreferredSize(new Dimension(450, 150));
         splitPane.add(topHalf);
  
         JPanel bottomHalf = new JPanel(new BorderLayout());
         //JPanel buttons = new JPanel();
         
                
-        //Change
+        //Cambio
         bottomHalf.add(outputPane, BorderLayout.CENTER);
         	//XXX: next line needed if bottomHalf is a scroll pane:
         	//bottomHalf.setMinimumSize(new Dimension(400, 50));
-        bottomHalf.setPreferredSize(new Dimension(450, 135));
+        bottomHalf.setPreferredSize(new Dimension(400, 135));
         //bottomHalf.add(save);
         //bottomHalf.add(search);
         splitPane.add(bottomHalf);
         
-           
         
-        //Create Menu.
-       JPanel card1 = new JPanel() {
+        //labelText="Descripcion--------------------------------------------------------";
+        //final JTextArea textarea = new JTextArea(labelText);
+      
+//        textarea.setBorder(new EmptyBorder(5, 5, 10, 5));
+        textarea.setBackground(null);
+        textarea.setEditable(false);
+        //textarea.setHighlighter(null);
+        textarea.setFont(new Font("Dialog", Font.PLAIN, 12));
+
+        
+        
+        //Create the "cards".
+       final JPanel card1 = new JPanel() {
             //Make the panel wider than it really needs, so
             //the window's wide enough for the tabs to stay
             //in one row.
@@ -141,29 +169,51 @@ public class Wizard  {
         //textarea.append(descrip);
         card1.add(textarea);
         //card1.add(new JButton("Button 1"));
-        save = new JButton("Save");
+        save = new JButton("Load");
         card1.add(save); 
         save.setEnabled(false);
         
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
            	
-            	Save salvar = new Save();
+            	Save salvar = new Save(shaderse,editor);
+            	System.out.println("Loading .....");
             	
             } 
            
         });
         
         
+        searchtext = new JTextField("Search ie: blur, texture", 50);
+        //card1.add(new JTextField("Search for a Shader", 50));
+        card1.add(searchtext); 
+        search = new JButton("Search");
+        //card1.add(search);    
+        
+        searchtext.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+           	String searchin = searchtext.getText(); 
+           	Search search = new Search(null, null); 
+            search.changeSearch(searchin);
+            String[] inid = search.searchid;
+            String[] inname = search.searchnames;
+            System.out.println(inname[0]); 
+            System.out.println(inid[0]); 
+            list.setListData(inname);
+            prueba = inid;
+            } 
+           
+        });
         
         
         //card1.add(new JButton("Save"));
         
  
+        //Menu 2 
         
-        card2.add(new JTextField("Search for a Shader", 50));
-        search = new JButton("Search");
-        card2.add(search);    
+        //card2.add(new JTextField("Search for a Shader", 50));
+        //search = new JButton("Search");
+        //card2.add(search);    
         //card2.add(new JButton("Search"));
  
         tabbedPane.addTab(BUTTONPANEL, card1);
@@ -199,7 +249,9 @@ public class Wizard  {
                 for (int i = minIndex; i <= maxIndex; i++) {
                     if (lsm.isSelectedIndex(i)) {
                         output.append(" " + i);
-                        shaderse = i+1;
+                        //shaderse = i+1;
+                        //Ojo prueba String hay que revisar como cambiar a int          
+                        shaderse = prueba[i];
                         System.out.println(shaderse);
                         
                     }
@@ -235,11 +287,14 @@ public class Wizard  {
 		//Lista
 		 
 		 try {
-		        System.out.println("Loading JDBC driver...");
+		        
+			 	Path p5 = Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
+			 	System.out.println("Loading JDBC driver...");
 		        Class.forName("org.h2.Driver");
 		        System.out.println("Connecting Shader DB...");
 		        Connection con = DriverManager.getConnection(
-		        "jdbc:h2:Shaderdb"		
+		        //"jdbc:h2:ShaderTool/Shaderdb"
+		        		"jdbc:h2:"+p5
 		        );
 		        System.out.println("Connected Shader DB");
 		        Statement conta = con.createStatement();
@@ -263,10 +318,10 @@ public class Wizard  {
 		        	String listadata2 = lista.getString("NOMBRE");
 		        	arreglo[k] = listadata2;
 		        	//System.out.println(lista.getString("NOMBRE"));
-		        	System.out.println(listadata2);
+		        	//System.out.println(listadata2);
 		        	
 		        	
-		        	System.out.println(k);
+		        	//System.out.println(k);
 		        	k ++; 
 		        	 }	
 		        	
@@ -290,10 +345,12 @@ public class Wizard  {
 		 
 		 //Adquiere los valores de IMG, Descripción, etc (TAGS)
 		 try {
-		        Class.forName("org.h2.Driver");
+		        
+			 	Path p5 = Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
+			 	Class.forName("org.h2.Driver");
 		        Connection con = DriverManager.getConnection(
-		        "jdbc:h2:Shaderdb"		
-		        );
+		        "jdbc:h2:"+p5
+			 	);
 		        //IMG
 		        rpta=null;
 		        Statement stmtimg = con.createStatement();
@@ -337,7 +394,13 @@ public class Wizard  {
 		 
 	 }//end inforeq
 	 
+	 public Editor editor() {
+			return editor;
+		}
 	
+	 
+	 
+	 
 	 
 	public static BufferedImage resize(BufferedImage image, int width, int height) {
 		    BufferedImage bi = new BufferedImage(width, height, BufferedImage.TRANSLUCENT);

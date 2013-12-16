@@ -1,2 +1,0 @@
-Se debe poner los archivos Shaderdb.h2.db y Shaderdb.trace.db en la carpeta donde
-se ejecuta Processing para el funcionamiento de la base de datos (temporalmente)

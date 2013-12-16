@@ -26,6 +26,8 @@
 
 package Shader.tool;
 
+import java.io.File;
+
 import javax.swing.JFrame;
 import processing.app.*;
 import processing.app.tools.*;
@@ -35,6 +37,7 @@ import processing.app.Sketch;
 import processing.app.SketchCode;
 import processing.core.PApplet;
 import Shader.tool.Wizard;
+import Shader.tool.Save;
 
  
 /**
@@ -43,11 +46,13 @@ import Shader.tool.Wizard;
 
 public class ShaderTool extends JFrame implements Tool{ 
  //public class ShaderTool implements Tool {
- Editor editor;
+	private processing.app.Editor editor;	
+	private Wizard info;
+  //Editor editor;
  
  //Variables 
 
-  
+	
 
 public String getMenuTitle() {
 	    return "Shader Tool";
@@ -55,12 +60,11 @@ public String getMenuTitle() {
 
 public void init(Editor editor) {
 this.editor = editor;
-
-
-
- 
 }
 
+//public void init(processing.app.Editor theEditor) {
+//	this.editor = theEditor;
+//}
 
 
 
@@ -70,24 +74,38 @@ this.editor = editor;
 
 public void run() {
 
-	 
+			Sketch sketch = editor.getSketch();
+			File sketchFolder = sketch.getFolder();
+			File sketchbookFolder = Base.getSketchbookFolder();
+ 
+	
 	        //Create and set up the window.
 	        JFrame frame = new JFrame("Shader Tool");
-	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	 
 	        //Create and set up the content pane.
-	        Wizard ini = new Wizard();
-	        ini.addComponentToPane(frame.getContentPane());
+	        
+	        
+	        
+	        Wizard demo = new Wizard(editor);
+	        demo.addComponentToPane(frame.getContentPane());
 	 
 	        //Display the window.
 	        
-	        frame.setSize(800,500);
+	        frame.setSize(100,100);
 	        frame.pack();
 	        frame.setVisible(true);
-	    
-	 
+	    /*
+	        try {
+				editor.getBase();
+				editor.getBase();
+				
+				editor.setText("hola");
+			}
+			catch(Exception excp){
+			}
 	
-	
+	*/
 
 }
 
