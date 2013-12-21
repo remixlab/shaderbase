@@ -32,15 +32,19 @@ class Save{
 	String fragment;	
 	String filenamef = null;
 	String code = null;
+	Path p5 =null;
+	Path img=null;
+	static String OS = System.getProperty("os.name").toLowerCase();
 	
 	private static Editor editor = null;
 	
 		
-	public Save(String shaderse, Editor editor)
+	public Save(String shaderse, Editor editor, Path pathos)
 	{
 	
 		
 		this.editor = editor;
+		p5 = pathos;
 	
 		//Extraer PDE, VERTEX Y FRAGMENT 
 		
@@ -48,14 +52,14 @@ class Save{
 			//editor.getBase();
 			//editor.getBase();
 			
-			Path p5 = Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
+			//Path p5 = Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
 		 	Class.forName("org.h2.Driver");
 	        Connection con = DriverManager.getConnection(
 	        "jdbc:h2:"+p5
 		 	
 	        );
 	    
-	        //CODIGO (FRAGMENTO)
+	        //CODE (FRAGMENT)
 	        
 	        Statement stmt = con.createStatement();
 	        ResultSet codigo1 = stmt.executeQuery("SELECT idCodigo, Fragment FROM codigo WHERE idCodigo ="+shaderse);
@@ -66,7 +70,7 @@ class Save{
 	        			  }
 	        
 	        
-	        // CODIGO PDE
+	        // CODE PDE
 	        
 	     
 	        Statement stmtpde = con.createStatement();
@@ -79,7 +83,7 @@ class Save{
 	        	
 	       			  }
 	        
-	        // CODIGO VERTEX
+	        // CODE VERTEX
 	        
 	        Statement stmtvert = con.createStatement();
 	        ResultSet codigovert = stmtvert.executeQuery("SELECT idCodigo, Vertex FROM codigo WHERE idCodigo ="+shaderse);
@@ -180,18 +184,28 @@ class Save{
 	        bw.newLine();
 	        bw.close();
 	        
-	        //Path currentRelativePath = Paths.get("");
-			//String s = currentRelativePath.toAbsolutePath().toString();
+	        //SEND IMG PREDT
+			  
+			//Path pathimg = Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "img.jpg");
+	        if (isWindows()) {
+				System.out.println("This is Windows");
+				img= Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "img.jpg");
+			} else if (isMac()) {
+				System.out.println("This is Mac");
+				img= Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "img.jpg");
+			} else if (isUnix()) {
+				System.out.println("This is Unix or Linux");
+				img= Paths.get(System.getProperty("user.home"),"sketchbook/tools/ShaderTool/tool/", "img.jpg");
+			} else if (isSolaris()) {
+				System.out.println("This is Solaris");
+			} else {
+				System.out.println("Your OS is not support!!");
+			}
 	        
-			//String path = new File(".").getCanonicalPath();
-			//System.out.println("Path "+s +path);
-			
-			//Enviar JPG predeterminado
-			  
-			  Path pathimg = Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "img.jpg");
-			  File imgpre = new File(folder, "img.jpg");
-			  Files.copy( pathimg, imgpre.toPath() );
-			  
+	        
+			File imgpre = new File(folder, "img.jpg");
+			//Files.copy( pathimg, imgpre.toPath() );
+			Files.copy(img, imgpre.toPath());  
 			  
 		    }
 		    
@@ -205,6 +219,30 @@ class Save{
 		
 	}
 	
+	
+	public static boolean isWindows() {
+		 
+		return (OS.indexOf("win") >= 0);
+ 
+	}
+ 
+	public static boolean isMac() {
+ 
+		return (OS.indexOf("mac") >= 0);
+ 
+	}
+ 
+	public static boolean isUnix() {
+ 
+		return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0 );
+ 
+	}
+ 
+	public static boolean isSolaris() {
+ 
+		return (OS.indexOf("sunos") >= 0);
+ 
+	}
 	
 	
 }

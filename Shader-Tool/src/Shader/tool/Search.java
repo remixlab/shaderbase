@@ -11,7 +11,11 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 import org.h2.fulltext.*;
+
+import processing.app.Editor;
 
 class Search {
 
@@ -19,9 +23,14 @@ class Search {
 	int contaid;
 	String[] searchid;
 	String[] searchnames;
+	private static Editor editor = null;
+	Path p5 = null;
 	
-	public Search(String[] searchid2, String[] searchnames2) {
+	public Search(String[] searchid2, String[] searchnames2, Editor edito, Path pathos) {
 		// TODO Auto-generated constructor stub
+		this.editor = editor;
+		p5=pathos;
+		
 	}
 
 	Search changeSearch(String newValue) {
@@ -29,7 +38,7 @@ class Search {
 		searchin = newValue;
         
 		try {
-			Path p5 = Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
+			//Path p5 = Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
 		 	Class.forName("org.h2.Driver");
 	        Connection con = DriverManager.getConnection(
 	        "jdbc:h2:"+p5
@@ -53,8 +62,14 @@ class Search {
         	contaid =k;
         }
         
+        if (contaid == 0) {
+  	      JOptionPane.showMessageDialog(editor, "Nothing found, try other word(s)",
+  	                                    "No Luck", JOptionPane.WARNING_MESSAGE);
+  	      return null;
+  	    }
         
-        //Se obtiene ID codigo
+             
+        //ID Shader (Lucene, H2)
         String arreglo [] = new String[contaid];
         for(int i=1; i<=contaid; i++){	
         
@@ -80,7 +95,7 @@ class Search {
 
         }
        
-        //Obtener Nombres de Búsqueda (Arreglo Lista)
+        //Names Search (List Array)
         
         String names [] = new String [contaid];
        
@@ -106,10 +121,10 @@ class Search {
 		} catch(Exception e) {
 			System.out.println("Unexpected error: "+e.getMessage());
 		}
-		return new Search(searchid, searchnames);
+		return new Search(searchid, searchnames, editor, p5);
 	//return searchid;
 	//return searchnames;
 	}
 
 	
-}
+}//end Search

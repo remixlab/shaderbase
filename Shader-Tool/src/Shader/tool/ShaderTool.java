@@ -29,6 +29,8 @@ package Shader.tool;
 import java.io.File;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import processing.app.*;
 import processing.app.tools.*;
 import processing.app.Base;
@@ -73,12 +75,11 @@ this.editor = editor;
 
 
 public void run() {
-
+	
 			Sketch sketch = editor.getSketch();
 			File sketchFolder = sketch.getFolder();
 			File sketchbookFolder = Base.getSketchbookFolder();
- 
-	
+			
 	        //Create and set up the window.
 	        JFrame frame = new JFrame("Shader Tool");
 	        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,25 +88,18 @@ public void run() {
 	        
 	        
 	        
-	        Wizard demo = new Wizard(editor);
-	        demo.addComponentToPane(frame.getContentPane());
+	        Wizard ini = new Wizard(editor);
+	        ini.addComponentToPane(frame.getContentPane());
 	 
 	        //Display the window.
 	        
 	        frame.setSize(100,100);
+	        
+	        //Need to check pack() function, failing with cardlayout
+	        
 	        frame.pack();
 	        frame.setVisible(true);
-	    /*
-	        try {
-				editor.getBase();
-				editor.getBase();
-				
-				editor.setText("hola");
-			}
-			catch(Exception excp){
-			}
-	
-	*/
+	   
 
 }
 

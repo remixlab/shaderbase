@@ -31,6 +31,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -75,6 +76,8 @@ public class Wizard  {
     final JTextArea textarea = new JTextArea();
     JTextField searchtext;
     private Editor editor = null;
+    static String OS = System.getProperty("os.name").toLowerCase();
+    Path pathos;
     
     
     public Wizard(Editor editor) {
@@ -87,6 +90,26 @@ public class Wizard  {
 
 	public void addComponentToPane(Container pane) {
         JTabbedPane tabbedPane = new JTabbedPane();
+        //OS Check
+        System.out.println(OS);
+        
+        if (isWindows()) {
+			System.out.println("Windows");
+			pathos= Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
+		} else if (isMac()) {
+			System.out.println("Mac iOS");
+			pathos= Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
+		} else if (isUnix()) {
+			System.out.println("Linux");
+			pathos= Paths.get(System.getProperty("user.home"),"sketchbook/tools/ShaderTool/tool/", "Shaderdb");
+		} else if (isSolaris()) {
+			System.out.println("Solaris");
+		} else {
+			System.out.println("Your OS is not supported!!");
+		}
+        
+        //Initial values
+        
         com();
         
         String[] listData = listadata;
@@ -139,11 +162,8 @@ public class Wizard  {
         //bottomHalf.add(search);
         splitPane.add(bottomHalf);
         
-        
-        //labelText="Descripcion--------------------------------------------------------";
-        //final JTextArea textarea = new JTextArea(labelText);
-      
-//        textarea.setBorder(new EmptyBorder(5, 5, 10, 5));
+             
+        //textarea.setBorder(new EmptyBorder(5, 5, 10, 5));
         textarea.setBackground(null);
         textarea.setEditable(false);
         //textarea.setHighlighter(null);
@@ -151,11 +171,9 @@ public class Wizard  {
 
         
         
-        //Create the "cards".
+        //Card layout.
        final JPanel card1 = new JPanel() {
-            //Make the panel wider than it really needs, so
-            //the window's wide enough for the tabs to stay
-            //in one row.
+            
             public Dimension getPreferredSize() {
                 Dimension size = super.getPreferredSize();
                 size.width += extraWindowWidth;
@@ -176,13 +194,12 @@ public class Wizard  {
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
            	
-            	Save salvar = new Save(shaderse,editor);
+            	Save salvar = new Save(shaderse,editor,pathos);
             	System.out.println("Loading .....");
             	
             } 
            
         });
-        
         
         searchtext = new JTextField("Search ie: blur, texture", 50);
         //card1.add(new JTextField("Search for a Shader", 50));
@@ -193,10 +210,11 @@ public class Wizard  {
         searchtext.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
            	String searchin = searchtext.getText(); 
-           	Search search = new Search(null, null); 
+           	Search search = new Search(null, null, editor, pathos); 
             search.changeSearch(searchin);
             String[] inid = search.searchid;
             String[] inname = search.searchnames;
+                     
             System.out.println(inname[0]); 
             System.out.println(inid[0]); 
             list.setListData(inname);
@@ -241,7 +259,7 @@ public class Wizard  {
             
             
             if (lsm.isSelectionEmpty()) {
-                output.append(" <none>");
+                output.append("");
             } else {
                 // Find out which indexes are selected.
                 int minIndex = lsm.getMinSelectionIndex();
@@ -252,7 +270,7 @@ public class Wizard  {
                         //shaderse = i+1;
                         //Ojo prueba String hay que revisar como cambiar a int          
                         shaderse = prueba[i];
-                        System.out.println(shaderse);
+                        //System.out.println(shaderse);
                         
                     }
                 }
@@ -288,7 +306,8 @@ public class Wizard  {
 		 
 		 try {
 		        
-			 	Path p5 = Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
+			 	Path p5 = pathos;
+			 	//Path p5 = Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
 			 	System.out.println("Loading JDBC driver...");
 		        Class.forName("org.h2.Driver");
 		        System.out.println("Connecting Shader DB...");
@@ -343,10 +362,11 @@ public class Wizard  {
     
 	 public void inforeq() {
 		 
-		 //Adquiere los valores de IMG, Descripción, etc (TAGS)
+		 //Values IMG, Description, etc (TAGS)
 		 try {
 		        
-			 	Path p5 = Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
+			 	//Path p5 = Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
+			 	Path p5 = pathos;
 			 	Class.forName("org.h2.Driver");
 		        Connection con = DriverManager.getConnection(
 		        "jdbc:h2:"+p5
@@ -366,7 +386,7 @@ public class Wizard  {
 		   	    
 		        }
 		        
-		        //Descripción
+		        //Description
 		       	      		  
 		        descrip=null;
 		        Statement stmtdescrip = con.createStatement();
@@ -411,5 +431,29 @@ public class Wizard  {
 		    return bi;
 	}//Resize image
 	 
-    
-	}//end wizard
+	
+	
+	public static boolean isWindows() {
+		 
+		return (OS.indexOf("win") >= 0);
+ 
+	}//end win
+ 
+	public static boolean isMac() {
+ 
+		return (OS.indexOf("mac") >= 0);
+ 
+	}//end Mac
+ 
+	public static boolean isUnix() {
+ 
+		return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0 );
+ 
+	}//end Linux
+ 
+	public static boolean isSolaris() {
+ 
+		return (OS.indexOf("sunos") >= 0);
+ 
+	}//end Solaris
+}//end wizard
