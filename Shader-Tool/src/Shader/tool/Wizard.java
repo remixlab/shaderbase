@@ -101,7 +101,7 @@ public class Wizard  {
 			pathos= Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
 		} else if (isUnix()) {
 			System.out.println("Linux");
-			pathos= Paths.get(System.getProperty("user.home"),"sketchbook/tools/ShaderTool/tool/", "Shaderdb");
+			pathos= Paths.get(System.getProperty("user.home"),"Documents/sketchbook/tools/ShaderTool/tool/", "Shaderdb");
 		} else if (isSolaris()) {
 			System.out.println("Solaris");
 		} else {
