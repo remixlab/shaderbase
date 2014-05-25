@@ -27,9 +27,14 @@
 package Shader.tool;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.TransportException;
 
 import processing.app.*;
 import processing.app.tools.*;
@@ -89,15 +94,31 @@ public void run() {
 	        
 	        
 	        Wizard ini = new Wizard(editor);
-	        ini.addComponentToPane(frame.getContentPane());
+	        try {
+				try {
+					ini.addComponentToPane(frame.getContentPane());
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} catch (TransportException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (GitAPIException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	 
 	        //Display the window.
 	        
-	        frame.setSize(100,100);
 	        
-	        //Need to check pack() function, failing with cardlayout
-	        
+	        	        
 	        frame.pack();
+	        frame.setSize(1240,400);
+	        
 	        frame.setVisible(true);
 	   
 

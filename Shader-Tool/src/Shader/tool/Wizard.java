@@ -3,6 +3,8 @@ package Shader.tool;
 import Shader.tool.Save;
 
 
+
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -14,17 +16,15 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Blob;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Map;
-
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -34,16 +34,19 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.TransportException;
+import org.eclipse.jgit.errors.NoWorkTreeException;
 
 import processing.app.Editor;
 
@@ -52,20 +55,27 @@ import processing.app.Editor;
 
 public class Wizard  {
 	
-    JTextArea output;
+    String searchin = "shader";
+	JTextArea output;
 	JList list;
 	JTable table;
 	String newline = "\n";
-	String descrip; 
+	String descrip = "Welcome to Shader Tool"; 
 	ListSelectionModel listSelectionModel;
-	String[] listadata;
-	String[] prueba = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"};
+	//String[] listadata = {"hola1", "hola2", "hola3","hola4"};
+	String[] listadata = null;
+	//String[] prueba = {"0", "1", "2", "3"};
+	String[] prueba = null;
 	int cuentat = 0;
 	String shaderse;
+	String shadersename;
 	JButton save;
 	JButton search;
+	JButton git;
+	JButton upload;
+	JButton update;
 	Image rpta=null;
-	Blob imagen=null;
+	
 	final JLabel picLabel = new JLabel();
     final static String BUTTONPANEL = "Shader List";
     final static String TEXTPANEL = "Options";
@@ -78,7 +88,9 @@ public class Wizard  {
     private Editor editor = null;
     static String OS = System.getProperty("os.name").toLowerCase();
     Path pathos;
-    
+    String[] searchid2 = null;
+    String[] searchnames2 = null;
+    String[] searchfolder2 = null;
     
     public Wizard(Editor editor) {
     	this.editor = editor;
@@ -88,29 +100,112 @@ public class Wizard  {
 	}
 
 
-	public void addComponentToPane(Container pane) {
+	public void addComponentToPane(Container pane) throws TransportException, GitAPIException, IOException, ParseException {
         JTabbedPane tabbedPane = new JTabbedPane();
         //OS Check
-        System.out.println(OS);
         
-        if (isWindows()) {
+        //Prints OS
+        //System.out.println(OS);
+        
+		if (isWindows()) {
 			System.out.println("Windows");
-			pathos= Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
+			pathos= Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/Shaderepo");
+			 
 		} else if (isMac()) {
 			System.out.println("Mac iOS");
-			pathos= Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
+			pathos= Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/Shaderepo");
 		} else if (isUnix()) {
 			System.out.println("Linux");
-			pathos= Paths.get(System.getProperty("user.home"),"Documents/sketchbook/tools/ShaderTool/tool/", "Shaderdb");
+			pathos= Paths.get(System.getProperty("user.home"),"Documents/sketchbook/tools/ShaderTool/tool/Shaderepo");
 		} else if (isSolaris()) {
 			System.out.println("Solaris");
 		} else {
 			System.out.println("Your OS is not supported!!");
 		}
+		
+		//Shaderepo data (Yes = Pull) (No = Clone) 
+		
+		if (Files.exists(pathos)) {
+			System.out.println("Folder");
+			
+			
+			int selectedOption = JOptionPane.showConfirmDialog(null, 
+                    "Would do you like to update the repo data??", 
+                    "Choose", 
+                    JOptionPane.YES_NO_OPTION); 
+			if (selectedOption == JOptionPane.YES_OPTION) {
+
+				
+				try {
+					Pull pull = new Pull(pathos, editor);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (TransportException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (GitAPIException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (NoWorkTreeException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (URISyntaxException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
+           	
+				
+				
+				String searchin1 = "shader";
+				Search search2 = new Search(searchid2, searchnames2, editor, pathos, searchfolder2, searchin1);
+				listadata = search2.searchnames;
+		        //prueba =  search2.searchid;
+		        prueba =  search2.searchfolder;
+				
+			} else {
+				//Pull pull = new Pull(null, pathos); (Falla Encabezado revisar como aconsejo grupo jgit Eclipse)
+				
+				
+				
+				
+				String searchin1 = "shader";
+				Search search2 = new Search(searchid2, searchnames2, editor, pathos, searchfolder2, searchin1);
+				listadata = search2.searchnames;
+		        //prueba =  search2.searchid;
+		        prueba =  search2.searchfolder;
+			}
+			
+			
+		}else {
+			
+			//System.out.println("No Folder");
+			int selectedOption = JOptionPane.showConfirmDialog(null, 
+                    "Shader Tool needs to download all the repo data in order to continue", 
+                    "Choose", 
+                    JOptionPane.YES_NO_OPTION); 
+			if (selectedOption == JOptionPane.YES_OPTION) {
+            
+				Clone clone = new Clone(null, pathos); //Clone Git
+				Index index = new Index(pathos, null); //Index Lucene
+				Search search1 = new Search(searchid2, searchnames2, editor, pathos, searchfolder2, searchin);
+				
+				//System.out.println(search.searchnames[2]);
+		        //System.out.println(search.searchfolder[3]);
+		        //System.out.println(search.searchid[4]);
+		        
+		        listadata = search1.searchnames;
+		        prueba =  search1.searchfolder;
+				
+			}else {
+				
+			
+			}
+		}
         
         //Initial values
         
-        com();
+ 
         
         String[] listData = listadata;
         list = new JList(listData);
@@ -190,11 +285,12 @@ public class Wizard  {
         save = new JButton("Load");
         card1.add(save); 
         save.setEnabled(false);
+        upload = new JButton("Upload");
         
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
            	
-            	Save salvar = new Save(shaderse,editor,pathos);
+            	Save save = new Save(shaderse,editor,shadersename); 
             	System.out.println("Loading .....");
             	
             } 
@@ -205,20 +301,93 @@ public class Wizard  {
         //card1.add(new JTextField("Search for a Shader", 50));
         card1.add(searchtext); 
         search = new JButton("Search");
+        update = new JButton("Update");
+        card1.add(upload);
+        card1.add(update);
+        
+        //Upload
+        
+       upload.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+           	
+            	try {
+					Upload Upload = new Upload(editor, pathos);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (TransportException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (GitAPIException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
+            	
+            	
+            } 
+           
+        });
+        
+        
+       
+       //UPDATE PULL
+       
+      update.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent e) {
+          	
+           	try {
+					Pull pull = new Pull(pathos, editor);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (TransportException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (GitAPIException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (NoWorkTreeException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (URISyntaxException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
+           	
+           	
+           } 
+          
+       });
+       
+                
         //card1.add(search);    
         
         searchtext.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
            	String searchin = searchtext.getText(); 
-           	Search search = new Search(null, null, editor, pathos); 
-            search.changeSearch(searchin);
-            String[] inid = search.searchid;
-            String[] inname = search.searchnames;
+           	Search search;
+			try {
+				search = new Search(searchid2, searchnames2, editor, pathos, searchfolder2, searchin);
+				search.changeSearch(searchin);
+						
+				//String[] listadata1 = new String[search.searchnames];
+		
+		        prueba =  search.searchfolder;
+		        listadata = search.searchnames;
+		        list.setListData(listadata);
+				
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} 
+           
+           // String[] inid = search.searchid;
+           // String[] inname = search.searchnames;
                      
-            System.out.println(inname[0]); 
-            System.out.println(inid[0]); 
-            list.setListData(inname);
-            prueba = inid;
+           // System.out.println(inname[0]); 
+           // System.out.println(inid[0]); 
+           // list.setListData(inname);
+           // prueba = inid;
             } 
            
         });
@@ -230,9 +399,20 @@ public class Wizard  {
         //Menu 2 
         
         //card2.add(new JTextField("Search for a Shader", 50));
-        //search = new JButton("Search");
-        //card2.add(search);    
-        //card2.add(new JButton("Search"));
+        git = new JButton("GitPrueba");
+        card2.add(git);    
+        //card2.add(new JButton(""));
+        
+        
+      git.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+           	
+            	
+            	System.out.println("Prueba Git .....");
+            	
+            } 
+           
+        });
  
         tabbedPane.addTab(BUTTONPANEL, card1);
         tabbedPane.addTab(TEXTPANEL, card2);
@@ -267,10 +447,11 @@ public class Wizard  {
                 for (int i = minIndex; i <= maxIndex; i++) {
                     if (lsm.isSelectedIndex(i)) {
                         output.append(" " + i);
-                        //shaderse = i+1;
-                        //Ojo prueba String hay que revisar como cambiar a int          
+                        
+                                
                         shaderse = prueba[i];
-                        //System.out.println(shaderse);
+                        shadersename = listadata[i];
+                        
                         
                     }
                 }
@@ -292,7 +473,7 @@ public class Wizard  {
            
           picLabel.setIcon( new ImageIcon(rpta));
           labelText = descrip;
-            
+           // labelText = "Hola";
           
            //card1.add(picLabel);
             
@@ -300,64 +481,7 @@ public class Wizard  {
     }//SharedList Listener
 
     
-    
-	 public void com() {
-		//Lista
-		 
-		 try {
-		        
-			 	Path p5 = pathos;
-			 	//Path p5 = Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
-			 	System.out.println("Loading JDBC driver...");
-		        Class.forName("org.h2.Driver");
-		        System.out.println("Connecting Shader DB...");
-		        Connection con = DriverManager.getConnection(
-		        //"jdbc:h2:ShaderTool/Shaderdb"
-		        		"jdbc:h2:"+p5
-		        );
-		        System.out.println("Connected Shader DB");
-		        Statement conta = con.createStatement();
-		        ResultSet conta1 = conta.executeQuery("SELECT COUNT(*) AS nombre FROM codigo");
-		        
-		        while (conta1.next()){
-		        	int cuenta = conta1.getInt("NOMBRE");
-		        	System.out.println(conta1.getInt("NOMBRE"));
-		        	cuentat = cuenta;
-		        	
-		        }
-		        
-		        String arreglo [] = new String[cuentat];
-		        for(int i=1; i<=cuentat; i++){		      
-		        Statement stmtlist = con.createStatement();
-		        ResultSet lista = stmtlist.executeQuery("SELECT nombre FROM codigo");
-		        int k = 0;
-		        while (lista.next()) {
-		        	
-		        	
-		        	String listadata2 = lista.getString("NOMBRE");
-		        	arreglo[k] = listadata2;
-		        	//System.out.println(lista.getString("NOMBRE"));
-		        	//System.out.println(listadata2);
-		        	
-		        	
-		        	//System.out.println(k);
-		        	k ++; 
-		        	 }	
-		        	
-		       	        		  
-		        	
-		        }
-		        listadata = arreglo;
-		 }catch(SQLException ex) {
-	        	
-	        	System.out.println("Error MYSQL");
-	        } catch (ClassNotFoundException e) {
-	        e.printStackTrace();
-	        } catch(Exception e) {
-	        System.out.println("Unexpected error: "+e.getMessage());
-	    }
-		
-	}//end com
+
 
     
 	 public void inforeq() {
@@ -365,48 +489,68 @@ public class Wizard  {
 		 //Values IMG, Description, etc (TAGS)
 		 try {
 		        
-			 	//Path p5 = Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/", "Shaderdb");
-			 	Path p5 = pathos;
-			 	Class.forName("org.h2.Driver");
-		        Connection con = DriverManager.getConnection(
-		        "jdbc:h2:"+p5
-			 	);
-		        //IMG
+			 
+			 
+		        //IMG JPG
 		        rpta=null;
-		        Statement stmtimg = con.createStatement();
-		        ResultSet imagen1 = stmtimg.executeQuery("SELECT idCodigo, Imagen FROM codigo WHERE idCodigo ="+shaderse);
-		        //System.out.println("Exc Query Image");
-		              
-		        while(imagen1.next()){
-		        imagen = imagen1.getBlob("Imagen");
-		        //rpta= javax.imageio.ImageIO.read(imagen.getBinaryStream());
-		        BufferedImage image= javax.imageio.ImageIO.read(imagen.getBinaryStream());
-		   	    BufferedImage resizedImage=resize(image,250,200);
-		   	    rpta= resizedImage; 
-		   	    
+		       
+		        
+		        try 
+		        {
+		        	//BufferedImage image = ImageIO.read(new File(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/img.jpg")); 
+		        	
+		        	//BufferedImage image = ImageIO.read(new File(shaderse +"/"+"shadersename"+".img")); 
+		        	String a = shaderse +"/"+shadersename+".jpg";
+		        	BufferedImage image = ImageIO.read(new File(a));
+		        	//System.out.println(a);
+		        	
+		        	
+		        	BufferedImage resizedImage=resize(image,250,200);
+		        	rpta= resizedImage; 
+		        } 
+		        catch (IOException e) 
+		        {
+		            e.printStackTrace();
 		        }
+		       
+		   	    
+		     
 		        
 		        //Description
 		       	      		  
 		        descrip=null;
-		        Statement stmtdescrip = con.createStatement();
-		        ResultSet descripsqls = stmtdescrip.executeQuery("SELECT idDescripcion, Descripcion FROM descripcion WHERE idDescripcion ="+shaderse);
-		        System.out.println("Exc Query Descripcion");
+		           
+		        //String dir = new File(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/img.jpg").toString();        
+		        String a = shaderse +"/"+shadersename+".txt";
 		        
-		                
+		        //File dir2 = new File(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/Prueba.txt");        
 		        
-		        while(descripsqls.next()){
-		          	descrip = descripsqls.getString("DESCRIPCION");
-		        	System.out.println(descripsqls.getString("DESCRIPCION"));
-		       
-		        }	
-		     
-		  
-		 }catch(SQLException ex) {
-	        	
-	        	System.out.println("Error MYSQL");
-	        } catch (ClassNotFoundException e) {
-	        e.printStackTrace();
+		        File dir2 = new File(a);        
+		        
+		        
+		        try {
+		            
+		        	BufferedReader br = new BufferedReader(new FileReader(dir2));
+		        	StringBuilder sb = new StringBuilder();
+	     	        String line = br.readLine();
+
+               while (line != null) {
+		                sb.append(line);
+		                sb.append(System.lineSeparator());
+		                line = br.readLine();
+		            }
+		            String everything = sb.toString();
+		            //System.out.println(everything);
+		            descrip = everything;
+		        }
+		        
+		        catch (IOException e) 
+		        {
+		            e.printStackTrace();
+		        }
+		        
+		     		  
+		 
 	        } catch(Exception e) {
 	        System.out.println("Unexpected error: "+e.getMessage());
 	    }
