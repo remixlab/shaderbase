@@ -20,9 +20,11 @@ import processing.app.Editor;
 
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.eclipse.jgit.api.AddCommand;
+import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.MergeCommand;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
 import org.eclipse.jgit.api.PullCommand;
@@ -40,6 +42,7 @@ import org.eclipse.jgit.errors.NoWorkTreeException;
 import org.eclipse.jgit.errors.UnmergedPathException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryState;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.CredentialsProvider;
@@ -64,8 +67,7 @@ class Pull {
 		//Path path = pathos;
 		final String repo = pathos.toString()+"/Data"; 
 		final File dir = new File(repo);
-		final String name = "Shadertool";
-		final String password = "1ergosum";
+		
 		String url = "https://github.com/Shadertool/shaderdb.git";
 
 		//CLONE REMOTE
@@ -80,25 +82,64 @@ class Pull {
                 .setDirectory(localPath)
                 .call();
 
-        // now open the created repository
+        // now open the created repository TMP
         FileRepositoryBuilder builder = new FileRepositoryBuilder();
         Repository repository = builder.setGitDir(new File(localPath+"/.git"))
                 .readEnvironment() // scan environment GIT_* variables
                 .findGitDir() // scan up the file system tree
                 .build();
         
-        //GIT REMOTE & LOCAL
+        //Repo Local
         
         FileRepositoryBuilder builder1 = new FileRepositoryBuilder();
-        Repository repositorylocal = builder.setGitDir(new File(repo + "/.git"))
+        Repository repositorylocal = builder1.setGitDir(new File(repo + "/.git"))
                 .readEnvironment() // scan environment GIT_* variables
                 .findGitDir() // scan up the file system tree
                 .build();
         
+        final String name = "Shadertool";
+		final String password = "1ergosum";
+     	CredentialsProvider cp = new UsernamePasswordCredentialsProvider(name, password);
         
-        Git gitremote = new Git(repository);
+ 
+     	
         Git gitlocal = new Git (repositorylocal);
         
+        //PUSH N
+      
+        /*
+        PushCommand pc = gitlocal.push();
+		pc.setCredentialsProvider(cp)
+		.setForce(true)
+		.setPushAll();
+		Iterator<PushResult> it;
+		try {
+			it = pc.call().iterator();
+			if(it.hasNext()){
+				System.out.println(it.next().toString());
+				}
+		} catch (TransportException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GitAPIException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        */
+        
+        //GIT REMOTE & LOCAL
+        
+       
+        
+        Git gitremote = new Git(repository);
+        
+     
+        
+        
+        
+        
+        //PULL LOCAL
         
        /* 
     	StoredConfig targetConfig = repositorylocal.getConfig();
@@ -117,14 +158,35 @@ class Pull {
     	
     	
     	*/
+        //MergeCommand mgCmd = gitlocal.merge().setCommit(false);
+        //mgCmd.include("foo"); // I think "foo" is considered as a Ref to a branch
+        //MergeResult res = mgCmd.call(); 
     	
-    	
-    	PullResult res = gitlocal.pull().call();
+        //if (res.getMergeStatus().equals(MergeResult.MergeStatus.CONFLICTING)){
+        	//   System.out.println(res.getConflicts().toString());
+        	//}
+       
+            
+        //MergeResult res1 = gitlocal.merge().call();
+       // MergeResult res1 = gitlocal.merge().setCommit(false).include(repositorylocal.getRef(Constants.MASTER)).call();
+        
+             
+        
+        PullResult res = gitlocal.pull().call();
     	String result = res.toString();
     	System.out.println(result);
+    	
+    	//String sourceChangeString = "Source change\n>>>>>>> branch 'master' of "
+    	//		+ gitlocal.getRepository().getConfig().getString("remote",
+    	//		"origin", "url");
         
+    	//if (res1.getMergeStatus().equals(MergeResult.MergeStatus.CONFLICTING)){
+    		//   System.out.println(res1.getConflicts().toString());
+    		//}
     	//FetchResult fetchResult = res.getFetchResult();
-    	//MergeResult mergeResult = res.getMergeResult();
+    	//FetchResult fetchresult = gitlocal.fetch().setCheckFetchedObjects(true).call();
+    	//MergeStatus mergeResult = prueba.getMergeResult().getMergeStatus();
+    			
     	//mergeResult.getMergeStatus(); 
 
         //repository.close();
@@ -141,6 +203,9 @@ class Pull {
 				 	    "Already up to date", //Título
 				 	    JOptionPane.WARNING_MESSAGE); //Tipo de mensaje
         }else{
+        	
+
+        	
         	copyFolder(sourcepath, local);
         	try {
 				Index index = new Index(pathos, null);

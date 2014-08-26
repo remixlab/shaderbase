@@ -249,7 +249,7 @@ class Upload{
 	        {
 	          String div = imgpath;
 	          String parts[] = div.split("Shaderepo");
-	      	  imgpathfinal = parts[0]+"img.jpg";
+	      	  imgpathfinal = parts[0]+"/img.jpg";
 	      	  
 	      	  
 	      	   
