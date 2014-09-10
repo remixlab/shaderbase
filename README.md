@@ -1,31 +1,37 @@
-Welcome to Shader Tool!
+Welcome to the Processing Shader Tool!
 ===================
 -----
 About
 -------------
 
-Shader Tool  is a free software tool developed for [Processing](http://www.processing.org/) with the idea of creating a structured database of  shaders made by any user, from the web and any other source that allows to export and import shaders from the data base to Processing and run them.
+*ShaderTool*  is a free software tool developed for [Processing](http://www.processing.org/) with the idea of creating a structured database of 
+shaders made by any user, from the web and any other source that allows to export and import shaders from the data base to Processing and run them.
 
-With the idea of helping the user finding a shader inside the database a search engine was implemented with the use of tags and other relevant information trying to return an accurate search result about the shaders inside the database. All the information and data inside Shader Tool is hold in a Github [repository](https://github.com/remixlab/shaderdb). The main idea is to send all the shaders information from Processing to Github with Shader Tool.  
+With the idea of helping the user finding a shader inside the database a search engine was implemented with the use of tags and other relevant
+information trying to return an accurate search result about the shaders inside the database. All the information and data inside ShaderTool
+is hold in another Github [repository](https://github.com/remixlab/shaderdb). The main idea is to send all the shaders information
+from *Processing* to Github with Shader Tool.
 
 Working OS
 -------
+
 >- Windows: Tested
->- Linux: Tested (Ubuntu)
+>- Linux: Tested, [Ubuntu](http://www.ubuntu.com/) and [ArchLinux](https://www.archlinux.org/)
 >- iOS: Not tested
 
 Current Version
 -----------
->- 1.0A
+>- 1.0.0-alpha1
 
 Installation
 -----------
-1. You need Processing. The latest version could be found [here](http://www.processing.org/download) 
-2. Download the latest version of Shader Tool from [here.](https://github.com/anfgomezmo/shader_tool/blob/master/Shader-Tool/distribution/ShaderTool-1/download/ShaderTool-1.zip?raw=true)
-3. If not already present, create a folder named "tools" inside your Sketchbook folder. (The location of the sketchbook folder is shown in Processing's Preferences dialog). Shader Tool uses the default tool folder locations of Processing. 
-4. Extract the contents of the downloaded .zip into the tools folder.
-5. Restart Processing.
-6. You will find a Shader Tool in the tools bar. 
+
+1. Download ans install Processing from [here](http://www.processing.org/download) 
+2. Download the latest version of ShaderTool from [here](https://github.com/remixlab/shader_tool/releases/download/v-1.0.0-alpha.1/shadertool-1.0.0-alpha1.zip)
+3. Extract the zip file to the Processing default tool folder location
+(the location of the sketchbook folder is shown in the Processing's Preferences dialog). If not already present, create a folder named "tools" inside your Sketchbook folder.
+4. Restart Processing.
+5. You will find a Shader Tool in the Processing tool's menu. 
 
 
 Interface
@@ -36,32 +42,43 @@ Shader Tool has a very simple interface.
 <br/>
 ![Shader Tool Interface](https://raw.githubusercontent.com/anfgomezmo/ImageReadme/master/Images/Shader%20Tool/ShaderTool1.jpg)
 <br/>
-There is a menu where all the shaders inside the database are indexed, as default this menu will show all the shaders indexed in the database. Once a search is done the relevant shaders will be showed. The middle shows a small record of the shaders such as the uploader, tags or a small description and the last part is an image of the shader. 
+There is a menu where all the shaders inside the database are indexed, as default this menu will show all the shaders indexed in the database.
+Once a search is done the relevant shaders will be shown.
+
+<!--- redactar mejor esta idea:  
+The middle shows a small record of the shaders such as the uploader, tags or a small description and the last part is an image of the shader. 
+-->
+
 ###Upload
 <br/>
 ![Shader Tool Interface2](https://raw.githubusercontent.com/anfgomezmo/ImageReadme/master/Images/Shader%20Tool/ShaderTool2.jpg)
 <br/>
 
-If you want to upload a shader a sub-menu will appear. It is recommended that you fill all the fields requested since they are used to improve the search results of your shader. You can keep the changes in your local machine and upload the changes in other time when you upload other shader (commit).
+If you want to upload a shader a sub-menu will appear. It is recommended that you fill all the fields since they are used to improve the
+semantic search queries.
 
+<!--- no entiendo muy bien esto:  
+You can keep the changes in your local machine and upload them later once 
+you upload other shader (commit).
+-->
 
-Limitations
+Notes
 ------------
->- Uploading shaders from multiple taps isn't supported yet.
->- In order to not create a conflict with commits from other users in the remote repository it is recommended to update every time you start Shader Tool.
->- If you use a shader name that already exits, the older shader will be edited.  
+
+* Uploading shaders from multiple tabs isn't supported yet.
+* The ShaderTool will ask you to update your local db every time it's loaded. Do it everytime you plan to update
+your own shaders to the [ShaderDB repository](https://github.com/remixlab/shaderdb) to avoid possible conflicts with other users' updates.
+it is recommended to update every time you start ShaderTool.
+* If you use a shader name that already exits, the older shader will be edited.
 
 
 License
 --------
 
+The ShaderTool is released under the terms of the [GPL-v3](http://www.gnu.org/licenses/gpl.html). All the shaders are released by:
 
-All the shaders you upload in Shader Tool are owned by you. You decide which license applies to every shader you create., if you don't place a license on a shader, it will be protected by our default license:
 
-
-[![](http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US) 
-
-This tool is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
+[![](http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US)
 
 Contact
 ------------
