@@ -1,30 +1,23 @@
-Welcome to the Processing Shader Tool!
+Welcome to the Processing ShaderTool!
 ===================
------
-About
--------------
+
+## About
 
 *ShaderTool*  is a free software tool developed for [Processing](http://www.processing.org/) with the idea of creating a structured database of 
-shaders made by any user, from the web and any other source that allows to export and import shaders from the data base to Processing and run them.
+shaders made by any user, from the web and any other source that allows to export and import shaders from the database to *Processing* and run them.
 
 With the idea of helping the user finding a shader inside the database a search engine was implemented with the use of tags and other relevant
-information trying to return an accurate search result about the shaders inside the database. All the information and data inside ShaderTool
-is hold in another Github [repository](https://github.com/remixlab/shaderdb). The main idea is to send all the shaders information
-from *Processing* to Github with Shader Tool.
+information trying to return an accurate search result about the shaders inside the database. All the information and data inside *ShaderTool*
+is hold in another [Github repository](https://github.com/remixlab/shaderdb). The main idea is to send all the shaders information
+from *Processing* to Github with *ShaderTool*.
 
-Working OS
--------
+## Working OS
 
->- Windows: Tested
->- Linux: Tested, [Ubuntu](http://www.ubuntu.com/) and [ArchLinux](https://www.archlinux.org/)
->- iOS: Not tested
+* Windows: Tested
+* Linux: Tested, [Ubuntu](http://www.ubuntu.com/) and [ArchLinux](https://www.archlinux.org/)
+* iOS: Not tested
 
-Current Version
------------
->- 1.0.0-alpha1
-
-Installation
------------
+## Installation
 
 1. Download ans install Processing from [here](http://www.processing.org/download) 
 2. Download the latest version of ShaderTool from [here](https://github.com/remixlab/shader_tool/releases/download/v-1.0.0-alpha.1/shadertool-1.0.0-alpha1.zip)
@@ -33,9 +26,7 @@ Installation
 4. Restart Processing.
 5. You will find a Shader Tool in the Processing tool's menu. 
 
-
-Interface
------------
+## Interface
 
 ###Simple Search
 Shader Tool has a very simple interface.  
@@ -49,7 +40,7 @@ Once a search is done the relevant shaders will be shown.
 The middle shows a small record of the shaders such as the uploader, tags or a small description and the last part is an image of the shader. 
 -->
 
-###Upload
+### Upload
 <br/>
 ![Shader Tool Interface2](https://raw.githubusercontent.com/anfgomezmo/ImageReadme/master/Images/Shader%20Tool/ShaderTool2.jpg)
 <br/>
@@ -62,8 +53,7 @@ You can keep the changes in your local machine and upload them later once
 you upload other shader (commit).
 -->
 
-Notes
-------------
+### Notes
 
 * Uploading shaders from multiple tabs isn't supported yet.
 * The ShaderTool will ask you to update your local db every time it's loaded. Do it everytime you plan to update
@@ -71,24 +61,17 @@ your own shaders to the [ShaderDB repository](https://github.com/remixlab/shader
 it is recommended to update every time you start ShaderTool.
 * If you use a shader name that already exits, the older shader will be edited.
 
-
-License
---------
+## License
 
 The ShaderTool is released under the terms of the [GPL-v3](http://www.gnu.org/licenses/gpl.html). All the shaders are released by:
 
 
 [![](http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US)
 
-Contact
-------------
+## Contact
+
 If you want to remove a shader from the data base, report a bug or helping us improving the tool please send an email to shadertool@gmail.com  
 
-
-Links
------------
+## Links
 
 For more information about  how to use  shaders in Processing follow this [tutorial](http://processing.org/tutorials/pshader/)
-
-Changes
-----------
