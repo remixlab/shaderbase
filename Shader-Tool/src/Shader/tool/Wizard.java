@@ -399,20 +399,20 @@ public class Wizard  {
         //Menu 2 
         
         //card2.add(new JTextField("Search for a Shader", 50));
-        git = new JButton("GitPrueba");
-        card2.add(git);    
+        //git = new JButton("GitPrueba");
+        //card2.add(git);    
         //card2.add(new JButton(""));
         
         
-      git.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+      //git.addActionListener(new ActionListener() {
+        //    public void actionPerformed(ActionEvent e) {
            	
             	
-            	System.out.println("Prueba Git .....");
+          //  	System.out.println("Prueba Git .....");
             	
-            } 
+            //} 
            
-        });
+        //});
  
         tabbedPane.addTab(BUTTONPANEL, card1);
         tabbedPane.addTab(TEXTPANEL, card2);
