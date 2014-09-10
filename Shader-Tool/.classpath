@@ -13,7 +13,7 @@
 	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/lucene-analyzers-common-4.7.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/lucene-core-4.7.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/lucene-queryparser-4.7.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/org.eclipse.jgit-3.2.0.201312181205-r.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/org.eclipse.jgit-3.2.0.201312181205-r-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/org.eclipse.jgit-3.3.2.201404171909-r.jar"/>
+	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/org.eclipse.jgit-3.3.2.201404171909-r-javadoc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
