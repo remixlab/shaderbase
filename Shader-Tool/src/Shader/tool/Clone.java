@@ -37,9 +37,9 @@ class Clone {
 	public Clone(String args[], Path pathos) throws TransportException, GitAPIException, IOException{
 		
 		String repo = pathos.toString()+"/Data"; 
-		String name = "Shadertool";
+		String name = "anfgomezmo";
 		String password = "1ergosum";
-		String url = "https://github.com/Shadertool/shaderdb.git";
+		String url = "https://github.com/remixlab/shaderdb.git";
 		 
 		// credentials
 		CredentialsProvider cp = new UsernamePasswordCredentialsProvider(name, password);
