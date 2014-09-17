@@ -68,7 +68,7 @@ class Pull {
 		final String repo = pathos.toString()+"/Data"; 
 		final File dir = new File(repo);
 		
-		String url = "https://github.com/Shadertool/shaderdb.git";
+		String url = "https://github.com/remixlab/shaderdb.git";
 
 		//CLONE REMOTE
 		
@@ -97,7 +97,7 @@ class Pull {
                 .findGitDir() // scan up the file system tree
                 .build();
         
-        final String name = "Shadertool";
+        final String name = "anfgomezmo";
 		final String password = "1ergosum";
      	CredentialsProvider cp = new UsernamePasswordCredentialsProvider(name, password);
         

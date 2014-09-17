@@ -93,9 +93,9 @@ class Upload{
 		//Path path = pathos;
 		final String repo = pathos.toString()+"/Data"; 
 		final File dir = new File(repo);
-		final String name = "Shadertool";
+		final String name = "anfgomezmo";
 		final String password = "1ergosum";
-		String url = "https://github.com/Shadertool/shaderdb.git";
+		String url = "https://github.com/remixlab/shaderdb.git";
 		
 		
 		//GUI
