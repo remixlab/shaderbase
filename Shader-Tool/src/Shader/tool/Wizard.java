@@ -1,5 +1,7 @@
 package Shader.tool;
 
+import static javax.swing.GroupLayout.Alignment.BASELINE;
+import static javax.swing.GroupLayout.Alignment.LEADING;
 import Shader.tool.Save;
 
 
@@ -9,6 +11,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -27,8 +30,11 @@ import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -40,6 +46,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -47,6 +55,7 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.errors.NoWorkTreeException;
+
 
 import processing.app.Editor;
 
@@ -74,14 +83,17 @@ public class Wizard  {
 	JButton git;
 	JButton upload;
 	JButton update;
+	JButton delete;
 	Image rpta=null;
 	
 	final JLabel picLabel = new JLabel();
     final static String BUTTONPANEL = "Shader List";
-    final static String TEXTPANEL = "Options";
+    final static String TEXTPANEL = "Upload";
+    final static String TEXTPANEL1 = "Update";
     final static int extraWindowWidth = 100;
     final JPanel card1 = new JPanel();
     final JPanel card2 = new JPanel();
+    final JPanel card3 = new JPanel();
     String labelText;
     final JTextArea textarea = new JTextArea();
     JTextField searchtext;
@@ -91,6 +103,7 @@ public class Wizard  {
     String[] searchid2 = null;
     String[] searchnames2 = null;
     String[] searchfolder2 = null;
+   
     
     public Wizard(Editor editor) {
     	this.editor = editor;
@@ -116,7 +129,7 @@ public class Wizard  {
 			pathos= Paths.get(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/Shaderepo");
 		} else if (isUnix()) {
 			System.out.println("Linux");
-			pathos= Paths.get(System.getProperty("user.home"),"Documents/sketchbook/tools/ShaderTool/tool/Shaderepo");
+			pathos= Paths.get(System.getProperty("user.home"),"sketchbook/tools/ShaderTool/tool/Shaderepo");
 		} else if (isSolaris()) {
 			System.out.println("Solaris");
 		} else {
@@ -134,10 +147,15 @@ public class Wizard  {
                     "Choose", 
                     JOptionPane.YES_NO_OPTION); 
 			if (selectedOption == JOptionPane.YES_OPTION) {
-
 				
+								
 				try {
+					
+					
+				
 					Pull pull = new Pull(pathos, editor);
+					
+					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -185,7 +203,9 @@ public class Wizard  {
                     "Choose", 
                     JOptionPane.YES_NO_OPTION); 
 			if (selectedOption == JOptionPane.YES_OPTION) {
-            
+				
+				//Ini??
+				
 				Clone clone = new Clone(null, pathos); //Clone Git
 				Index index = new Index(pathos, null); //Index Lucene
 				Search search1 = new Search(searchid2, searchnames2, editor, pathos, searchfolder2, searchin);
@@ -204,9 +224,9 @@ public class Wizard  {
 		}
         
         //Initial values
-        
- 
-        
+		Start();
+		
+		
         String[] listData = listadata;
         list = new JList(listData);
  
@@ -241,8 +261,8 @@ public class Wizard  {
         //topHalf.add(tableContainer);
  
         //topHalf.setMinimumSize(new Dimension(100, 50));
-        topHalf.setPreferredSize(new Dimension(450, 150));
-        splitPane.add(topHalf);
+        topHalf.setPreferredSize(new Dimension(450, 200));
+        //splitPane.add(topHalf); **
  
         JPanel bottomHalf = new JPanel(new BorderLayout());
         //JPanel buttons = new JPanel();
@@ -255,7 +275,7 @@ public class Wizard  {
         bottomHalf.setPreferredSize(new Dimension(400, 135));
         //bottomHalf.add(save);
         //bottomHalf.add(search);
-        splitPane.add(bottomHalf);
+        //splitPane.add(bottomHalf); **
         
              
         //textarea.setBorder(new EmptyBorder(5, 5, 10, 5));
@@ -277,15 +297,16 @@ public class Wizard  {
         };
         
         
-        card1.add(splitPane);
-        card1.add(picLabel);
+        
         //textarea.append(descrip);
-        card1.add(textarea);
+        //card1.add(textarea); **
         //card1.add(new JButton("Button 1"));
         save = new JButton("Load");
-        card1.add(save); 
+        //card1.add(save); **
         save.setEnabled(false);
+        delete = new JButton("Delete");
         upload = new JButton("Upload");
+        delete.setEnabled(false);
         
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -299,11 +320,93 @@ public class Wizard  {
         
         searchtext = new JTextField("Search ie: blur, texture", 50);
         //card1.add(new JTextField("Search for a Shader", 50));
-        card1.add(searchtext); 
+         
         search = new JButton("Search");
         update = new JButton("Update");
-        card1.add(upload);
-        card1.add(update);
+        
+        //card1.add(upload); **
+        //card1.add(update); **
+        
+        
+        //group grid
+        JPanel panel = new JPanel();
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);      
+        
+       
+        panel.setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+        
+        layout.setHorizontalGroup(
+        		layout.createSequentialGroup()
+        			 .addGroup(layout.createParallelGroup(LEADING)
+        		     .addGroup(layout.createSequentialGroup()	
+        		    		 .addComponent(searchtext)
+        	        		 .addComponent(search))
+        	         .addGroup(layout.createParallelGroup(LEADING)
+        			 .addGroup(layout.createSequentialGroup()	
+        				
+            			.addComponent(topHalf)
+            			.addComponent(picLabel)))
+            			
+            		.addGroup(layout.createParallelGroup(LEADING)	
+            			
+            		 .addGroup(layout.createSequentialGroup()	
+            		//.addGroup(layout.createParallelGroup(LEADING)	
+            			.addComponent(bottomHalf)))		
+        			
+            		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)	
+        				 .addGroup(layout.createSequentialGroup()	
+        		    	.addComponent(save)
+        		    	//.addComponent(update)
+        		    	.addComponent(delete)))			
+        				
+        ));
+        
+        
+        layout.setVerticalGroup(
+        		layout.createSequentialGroup()	
+        		
+        		       				
+        				
+        		.addGroup(layout.createParallelGroup(BASELINE)
+        				.addComponent(searchtext)
+        				.addComponent(search))
+                .addGroup(layout.createParallelGroup(BASELINE)
+                		.addComponent(topHalf)
+                		.addComponent(picLabel))
+                
+                              		
+                .addGroup(layout.createParallelGroup(BASELINE)
+                		.addComponent(bottomHalf)
+                		//.addComponent(save)
+                )
+                		
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                //.addGroup(layout.createSequentialGroup()	
+                    	.addComponent(save)
+                    	//.addComponent(update)
+                    	.addComponent(delete))
+                		
+                		
+        );
+        
+       // card1.removeAll();
+        card1.add(panel);
+        
+        
+        //Show
+        
+        //card1.add(searchtext);
+        //card1.add(search);
+       //card1.add(splitPane);
+        //card1.add(topHalf);
+        //card1.add(picLabel);
+        //card1.add(bottomHalf);
+        
         
         //Upload
         
@@ -311,7 +414,7 @@ public class Wizard  {
             public void actionPerformed(ActionEvent e) {
            	
             	try {
-					Upload Upload = new Upload(editor, pathos);
+					Upload Upload = new Upload(editor, pathos, card2, listadata);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -329,7 +432,45 @@ public class Wizard  {
         });
         
         
+       //DELETE LOCAL
        
+             
+       delete.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent e) {
+          	
+        	  
+        		   
+        	  Start();
+        	   
+        	  Delete delete = new Delete(shaderse, editor, pathos); 
+        	   
+        	  
+        	shaderse = "1"; 
+        	 
+        	/*
+        	  String searchin = "shader"; 
+              Search search;
+              try {
+  				search = new Search(searchid2, searchnames2, editor, pathos, searchfolder2, searchin);
+  				search.changeSearch(searchin);
+  						
+  				//String[] listadata1 = new String[search.searchnames];
+  		
+  		        prueba =  search.searchfolder;
+  		        listadata = search.searchnames;
+  		        list.setListData(listadata);
+  				
+  			} catch (ParseException e1) {
+  				// TODO Auto-generated catch block
+  				e1.printStackTrace();
+  			} 
+        	 
+             
+        	  */
+        	  
+           } 
+          
+       });
        //UPDATE PULL
        
       update.addActionListener(new ActionListener() {
@@ -362,7 +503,7 @@ public class Wizard  {
                 
         //card1.add(search);    
         
-        searchtext.addActionListener(new ActionListener() {
+        search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
            	String searchin = searchtext.getText(); 
            	Search search;
@@ -399,25 +540,63 @@ public class Wizard  {
         //Menu 2 
         
         //card2.add(new JTextField("Search for a Shader", 50));
-        //git = new JButton("GitPrueba");
+        
+        
+      
+        
+        
+        
+        git = new JButton("GitPrueba");
         //card2.add(git);    
         //card2.add(new JButton(""));
         
         
-      //git.addActionListener(new ActionListener() {
-        //    public void actionPerformed(ActionEvent e) {
+      git.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
            	
             	
-          //  	System.out.println("Prueba Git .....");
+            	System.out.println("Prueba Git .....");
             	
-            //} 
+            } 
            
-        //});
+        });
  
+      ChangeListener changeListener = new ChangeListener() {
+          public void stateChanged(ChangeEvent changeEvent) {
+            JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
+            int index = sourceTabbedPane.getSelectedIndex();
+            if (sourceTabbedPane.getTitleAt(index)=="Upload");
+            {
+            	try {
+					Upload Upload = new Upload(editor, pathos, card2, listadata);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (TransportException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (GitAPIException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
+            }
+            
+            
+            System.out.println("Tab changed to: " + sourceTabbedPane.getTitleAt(index));
+          }
+        };
+        tabbedPane.addChangeListener(changeListener);
+      
+      
         tabbedPane.addTab(BUTTONPANEL, card1);
         tabbedPane.addTab(TEXTPANEL, card2);
+        ///tabbedPane.addTab(TEXTPANEL1, card3);
+        
+        
  
         pane.add(tabbedPane, BorderLayout.CENTER);
+        
+        
     }//end component
 
 	
@@ -465,6 +644,14 @@ public class Wizard  {
             save.setEnabled(true);  
             ImageIcon one;      
            
+            //DELETE
+            if(shadersename.contains("(LOCAL)")){
+         	   delete.setEnabled(true);  
+     		  
+     	   }else{
+     		  delete.setEnabled(false);  
+     	   }
+            //DELETE
             
             one = new ImageIcon(rpta);
             picLabel.setIcon(one);
@@ -558,6 +745,111 @@ public class Wizard  {
 		 
 	 }//end inforeq
 	 
+	 
+	 //Ini
+	 
+ public void Start() {
+		 
+		  try {
+		        
+		        //IMG JPG
+		        rpta=null;
+		       
+		        
+		        try 
+		        {
+		        	String imgini = pathos.toString();
+		            String imgpathini = null;
+		            if (imgini.contains("Shaderepo"))
+			        {
+			          String div = imgini;
+			          String parts[] = div.split("Shaderepo");
+			      	  imgpathini = parts[0]+"ShaderTool.jpg";
+			      	  
+			      	System.out.println(imgpathini);
+			        }
+		        	
+		        	//BufferedImage image = ImageIO.read(new File(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/img.jpg")); 
+		        	
+		        	//BufferedImage image = ImageIO.read(new File(shaderse +"/"+"shadersename"+".img")); 
+		        	
+		        	BufferedImage image = ImageIO.read(new File(imgpathini));
+		        	//System.out.println(a);
+		        	
+		        	
+		        	BufferedImage resizedImage=resize(image,250,200);
+		        	rpta= resizedImage; 
+		        	
+		        	ImageIcon one;      
+		            
+		            
+		            one = new ImageIcon(rpta);
+		            picLabel.setIcon(one);
+		            
+		        } 
+		        catch (IOException e) 
+		        {
+		            e.printStackTrace();
+		        }
+		       
+		   	    
+		     
+		        
+		        //Description
+		       	      		  
+		        descrip=null;
+		           
+		        //String dir = new File(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/img.jpg").toString();        
+		        String txtini = pathos.toString();
+	            String txtpathini = null;
+	            if (txtini.contains("Shaderepo"))
+		        {
+		          String div = txtini;
+		          String parts[] = div.split("Shaderepo");
+		      	  txtpathini = parts[0]+"Welcome.txt";
+		        }
+		        
+		        //File dir2 = new File(System.getProperty("user.home"),"Documents/Processing/tools/ShaderTool/tool/Prueba.txt");        
+		        
+	        	System.out.println(txtpathini);
+	            
+		        File dir2 = new File(txtpathini);        
+		        
+		        
+		        try {
+		            
+		        	BufferedReader br = new BufferedReader(new FileReader(dir2));
+		        	StringBuilder sb = new StringBuilder();
+	     	        String line = br.readLine();
+
+               while (line != null) {
+		                sb.append(line);
+		                sb.append(System.lineSeparator());
+		                line = br.readLine();
+		            }
+		            String everything = sb.toString();
+		            //System.out.println(everything);
+		            descrip = everything;
+		            labelText = descrip;
+		        }
+		        
+		        catch (IOException e) 
+		        {
+		            e.printStackTrace();
+		        }
+		        
+		     		  
+		 
+	        } catch(Exception e) {
+	        System.out.println("Unexpected error: "+e.getMessage());
+	    }
+		 
+		 
+	 }//end Ini
+	 
+	 
+	 
+	 
 	 public Editor editor() {
 			return editor;
 		}
@@ -576,7 +868,7 @@ public class Wizard  {
 	}//Resize image
 	 
 	
-	
+
 	public static boolean isWindows() {
 		 
 		return (OS.indexOf("win") >= 0);
