@@ -117,8 +117,8 @@ public void run() {
 	        
 	        	        
 	        frame.pack();
-	        frame.setSize(1240,400);
-	        
+	        frame.setSize(820,550);
+	        frame.setResizable(false); //No Resize
 	        frame.setVisible(true);
 	   
 

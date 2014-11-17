@@ -1,6 +1,7 @@
 package Shader.tool;
 
 
+import java.util.Arrays;
 import java.util.Iterator;
 import processing.app.Editor;
 
@@ -28,6 +29,7 @@ import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.PushResult;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Window;
 import java.io.BufferedReader;
@@ -54,6 +56,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -85,31 +88,32 @@ class Upload{
 	//public Upload(String shaderse, Editor editor, String shadersename)
 	
 
-	public Upload(final Editor editor, final Path pathos) throws IOException, TransportException, GitAPIException
+	public Upload(final Editor editor, final Path pathos, JPanel card2, String[] listadata) throws IOException, TransportException, GitAPIException
 	{
 	
 		//String path = shaderse;
+		final String[] listadata2 = listadata;
 		this.editor = editor;
 		//Path path = pathos;
 		final String repo = pathos.toString()+"/Data"; 
 		final File dir = new File(repo);
-		final String name = "anfgomezmo";
+		final String name = "Shadertool";
 		final String password = "1ergosum";
-		String url = "https://github.com/remixlab/shaderdb.git";
+		String url = "https://github.com/Shadertool/shaderdb.git";
 		
 		
 		//GUI
 		
-		Frame frame = new JFrame();
+		//Frame frame = new JFrame();
 		JPanel panel = new JPanel();
-		frame.setTitle("Shader Upload");	
-        frame.setLocation(500, 200);
+		//frame.setTitle("Shader Upload");	
+        //frame.setLocation(500, 200);
         JLabel namel = new JLabel("Shader name:");
         JLabel tagl = new JLabel("Tags:");
         JLabel desl = new JLabel("Description:");
         JLabel authorl = new JLabel("Author:");
         JLabel emaill = new JLabel("Email:");
-        JLabel imagel = new JLabel ("Image");
+        JLabel imagel = new JLabel ("Adding an Image:");
         final JTextField namet = new JTextField();
         namet.setText("Name your shader");
         final JTextField tagt = new JTextField();
@@ -128,10 +132,11 @@ class Upload{
         authort.setText("add your name or nickname");
         final JTextField emailt = new JTextField();
         emailt.setText("add your email (optional)");
-        final JButton commitb = new JButton("Local rep");
+        final JButton commitb = new JButton("Save");
         JButton pushb = new JButton("Remote rep");
         final JButton imgb = new JButton("Load Image");
         final JCheckBox noimg = new JCheckBox("Default Image");
+        final JCheckBox noremote = new JCheckBox("Save in local machine");
         
         //Checkbox borders
         
@@ -177,7 +182,8 @@ class Upload{
             		//.addGroup(layout.createParallelGroup(LEADING)	
             			.addComponent(imagel)
             			.addComponent(imgb)
-        				.addComponent(noimg))		
+        				.addComponent(noimg)
+        				.addComponent(noremote))		
         				
         				 .addGroup(layout.createSequentialGroup()	
         		    //.addGroup(layout.createParallelGroup(LEADING)	
@@ -217,18 +223,26 @@ class Upload{
                 .addGroup(layout.createParallelGroup(BASELINE)
                 		.addComponent(imagel)
                 		.addComponent(noimg)
-                		.addComponent(imgb))
+                		.addComponent(imgb)
+                		.addComponent(noremote))
                 		
                 .addGroup(layout.createParallelGroup(BASELINE)
                 		.addComponent(commitb))
         		    	//.addComponent(pushb))
                 		
         );
+        panel.setPreferredSize(new Dimension(800, 480));
         
-        frame.add(panel);
-        frame.pack();
-        frame.setSize(500,500);
-        frame.setVisible(true);
+        card2.removeAll();
+        card2.add(panel);
+        
+        //frame.pack();
+        //frame.setSize(500,500);
+        //frame.setVisible(true);
+        
+      
+        card2.setVisible(true);
+        
         
         
         noimg.addActionListener(new ActionListener() {
@@ -333,6 +347,16 @@ class Upload{
 		// credentials
 		CredentialsProvider cp = new UsernamePasswordCredentialsProvider(name, password);
 		
+		int selectedOption1 = JOptionPane.showConfirmDialog(null, 
+                "Do you want to share the shader with other users??", 
+                "Choose", 
+                JOptionPane.YES_NO_OPTION); 
+		if (selectedOption1 == JOptionPane.YES_OPTION) {
+			
+		
+		
+		
+		
 		//FOLDERS
 		
 		File theDir = new File(repo+"/ShaderData/"+a1);
@@ -358,8 +382,16 @@ class Upload{
 			       System.out.println("DIR 2 created");  
 			     }
 			  }
+		
+		
+        //Check Name
+		if(Arrays.asList(listadata2).contains(namet.getText())){
+			System.out.println("Nombre Existe");  
+		}	  
 		//TXT FILE
 		
+			  
+			  
 		PrintWriter writer;
 		try {
 			writer = new PrintWriter(repo+"/ShaderData/"+a1+"/"+a1+".txt", "UTF-8");
@@ -462,6 +494,10 @@ class Upload{
 			e3.printStackTrace();
 		} 
 	    
+	    
+	    //
+	    
+	    
 		//REPO
 		
 		FileRepositoryBuilder builder = new FileRepositoryBuilder();
@@ -548,10 +584,10 @@ class Upload{
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}//End REINDEX
 		
 		int selectedOption = JOptionPane.showConfirmDialog(null, 
-                "Do you want to upload the shader into the remote repository??", 
+                "Do you want to upload the shader now??", 
                 "Choose", 
                 JOptionPane.YES_NO_OPTION); 
 		if (selectedOption == JOptionPane.YES_OPTION) {
@@ -583,6 +619,7 @@ class Upload{
 		
 		}
 		
+		
 		// PUSH
 	/*	
 		PushCommand pc = git.push();
@@ -610,7 +647,170 @@ class Upload{
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-        }else {
+        
+        
+		}else {//ADD
+			
+			String a2 = a1+" (LOCAL)";
+			a1=a2;
+						
+			//FOLDERS
+			
+			File theDir = new File(repo+"/ShaderData/"+a1);
+			 System.out.println(repo+"/ShaderData/"+a1);
+			  // if the directory does not exist, create it
+			  if (!theDir.exists()) {
+			    //System.out.println("creating directory: " + directoryName);
+			    boolean result = theDir.mkdir();  
+
+			     if(result) {    
+			       System.out.println("DIR created");  
+			     }
+			  }
+			  
+			  File theDir2 = new File(repo+"/ShaderData/"+a1+"/Code");
+				 System.out.println(repo+"/ShaderData/"+a1+"/Code");
+				  // if the directory does not exist, create it
+				  if (!theDir2.exists()) {
+				    //System.out.println("creating directory: " + directoryName);
+				    boolean result = theDir2.mkdir();  
+
+				     if(result) {    
+				       System.out.println("DIR 2 created");  
+				     }
+				  }
+			
+			
+	        //Check Name
+			if(Arrays.asList(listadata2).contains(namet.getText())){
+				System.out.println("Nombre Existe");  
+			}	  
+			//TXT FILE
+			
+				  
+				  
+			PrintWriter writer;
+			try {
+				writer = new PrintWriter(repo+"/ShaderData/"+a1+"/"+a1+".txt", "UTF-8");
+				
+				writer.println("Name:");
+				writer.println(namet.getText());
+				writer.println("Tags:");
+				writer.println("shader, "+ tagt.getText());
+				writer.println("Description:");
+				writer.println(dest.getText());
+				writer.println("Autor:");
+				writer.println(authort.getText());
+				writer.println("Email:");
+				writer.println(emailt.getText());
+				writer.close();
+			} catch (FileNotFoundException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			} catch (UnsupportedEncodingException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
+			
+			
+			
+		        // PDE FILE
+		          	
+		        	
+			
+
+			String filename = a1;
+				
+		
+				
+				if (!filename.endsWith(".pde")) {
+				      filename += ".pde";
+				    }
+
+				   // File dirc = new File(repo+"/"+);
+				    	    
+				    String f = pdecode;
+				    try{
+				    	 	
+				    File fileTemp = new File(theDir, filename);
+				    if (fileTemp.exists()){
+				    fileTemp.delete();
+				    }  
+				    
+				    
+				    BufferedWriter bw = new BufferedWriter(new FileWriter(new File(theDir, filename
+			                ), true));
+				    bw.write(f);
+			        bw.newLine();
+			        bw.close();
+			        
+				
+			}
+			catch(Exception excp){
+			}
+			
+		    //DATA
+		    
+		    File dirdata = new File(folderpath + "/data");
+		    String[] dirdatainfo = dirdata.list();
+		    if (dirdatainfo == null){
+		    	JOptionPane.showMessageDialog(null,
+					     "The data folder is empty"
+					 , //Mensaje
+					 	    "No files in data folder", //Título
+					 	    JOptionPane.WARNING_MESSAGE); //Tipo de mensaje
+		        try {
+					throw new Exception("Data Folder empty");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+		    	}
+		        else { 
+		        		try{
+		        			copyFolder(dirdata,theDir2);
+		        		}catch(IOException e){
+		        			e.printStackTrace();
+		        	
+		        		}
+		        	        	
+		        for (int x=0;x<dirdatainfo.length;x++){
+		        System.out.println(dirdatainfo[x]);
+		        	}
+		        
+		        }
+		    
+		    //IMG COPY
+		    
+		    File imgini = new File(imgpathfinal);
+		    File imgfinal = new File(repo+"/ShaderData/"+a1+"/"+ a1+ ".jpg");
+		    try {
+				FileUtils.copyFile(imgini, imgfinal);
+			} catch (IOException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			} 
+		    
+			
+		  //RE-INDEX
+			
+			try {
+				try {
+					Index index = new Index(pathos, null);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}//End REINDEX
+		    
+			
+		}//ADD
+		
+		
+        }else {//END IF PDE
         	JOptionPane.showMessageDialog(null,
 				     "The sketch doesn't contains a PShader class, there isn't any shader in code," +
 				     "please check your sketch code"
