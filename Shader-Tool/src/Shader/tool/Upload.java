@@ -182,8 +182,8 @@ class Upload{
             		//.addGroup(layout.createParallelGroup(LEADING)	
             			.addComponent(imagel)
             			.addComponent(imgb)
-        				.addComponent(noimg)
-        				.addComponent(noremote))		
+        				.addComponent(noimg))
+        				//.addComponent(noremote))		
         				
         				 .addGroup(layout.createSequentialGroup()	
         		    //.addGroup(layout.createParallelGroup(LEADING)	
@@ -223,8 +223,8 @@ class Upload{
                 .addGroup(layout.createParallelGroup(BASELINE)
                 		.addComponent(imagel)
                 		.addComponent(noimg)
-                		.addComponent(imgb)
-                		.addComponent(noremote))
+                		.addComponent(imgb))
+                		//.addComponent(noremote))
                 		
                 .addGroup(layout.createParallelGroup(BASELINE)
                 		.addComponent(commitb))
