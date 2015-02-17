@@ -88,7 +88,7 @@ class Upload{
 	//public Upload(String shaderse, Editor editor, String shadersename)
 	
 
-	public Upload(final Editor editor, final Path pathos, JPanel card2, String[] listadata) throws IOException, TransportException, GitAPIException
+	public Upload(final Editor editor, final Path pathos, JPanel card2, String[] listadata, boolean updatecheck) throws IOException, TransportException, GitAPIException
 	{
 	
 		//String path = shaderse;
@@ -101,6 +101,8 @@ class Upload{
 		final String password = "1ergosum";
 		String url = "https://github.com/Shadertool/shaderdb.git";
 		
+		
+
 		
 		//GUI
 		
@@ -182,8 +184,9 @@ class Upload{
             		//.addGroup(layout.createParallelGroup(LEADING)	
             			.addComponent(imagel)
             			.addComponent(imgb)
-        				.addComponent(noimg))
-        				//.addComponent(noremote))		
+        				.addComponent(noimg)
+        				//.addComponent(noremote)
+        				)		
         				
         				 .addGroup(layout.createSequentialGroup()	
         		    //.addGroup(layout.createParallelGroup(LEADING)	
@@ -223,8 +226,9 @@ class Upload{
                 .addGroup(layout.createParallelGroup(BASELINE)
                 		.addComponent(imagel)
                 		.addComponent(noimg)
-                		.addComponent(imgb))
-                		//.addComponent(noremote))
+                		.addComponent(imgb)
+                		//.addComponent(noremote)
+                		)
                 		
                 .addGroup(layout.createParallelGroup(BASELINE)
                 		.addComponent(commitb))
@@ -341,7 +345,7 @@ class Upload{
             		}
             	
        //PDE CHECK
-             		
+               		
         if(pdecode.contains("PShader")){
 		
 		// credentials
@@ -681,10 +685,7 @@ class Upload{
 				  }
 			
 			
-	        //Check Name
-			if(Arrays.asList(listadata2).contains(namet.getText())){
-				System.out.println("Nombre Existe");  
-			}	  
+	        	  
 			//TXT FILE
 			
 				  

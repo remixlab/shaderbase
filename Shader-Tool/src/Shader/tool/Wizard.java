@@ -85,6 +85,7 @@ public class Wizard  {
 	JButton update;
 	JButton delete;
 	Image rpta=null;
+	boolean updatecheck;
 	
 	final JLabel picLabel = new JLabel();
     final static String BUTTONPANEL = "Shader List";
@@ -143,7 +144,7 @@ public class Wizard  {
 			
 			
 			int selectedOption = JOptionPane.showConfirmDialog(null, 
-                    "Would do you like to update the repo data??", 
+                    "Want to check for updates??", 
                     "Choose", 
                     JOptionPane.YES_NO_OPTION); 
 			if (selectedOption == JOptionPane.YES_OPTION) {
@@ -151,7 +152,7 @@ public class Wizard  {
 								
 				try {
 					
-					
+					updatecheck = true; 
 				
 					Pull pull = new Pull(pathos, editor);
 					
@@ -184,7 +185,12 @@ public class Wizard  {
 			} else {
 				//Pull pull = new Pull(null, pathos); (Falla Encabezado revisar como aconsejo grupo jgit Eclipse)
 				
+				//NO UPDATE
+				JOptionPane.showMessageDialog(null,"Shader Tool will save in the local machine only",
+				    "Inane warning",
+				    JOptionPane.WARNING_MESSAGE);
 				
+				updatecheck = false;
 				
 				
 				String searchin1 = "shader";
@@ -197,12 +203,19 @@ public class Wizard  {
 			
 		}else {
 			
+			updatecheck = true;
+			
 			//System.out.println("No Folder");
-			int selectedOption = JOptionPane.showConfirmDialog(null, 
-                    "Shader Tool needs to download all the repo data in order to continue", 
-                    "Choose", 
-                    JOptionPane.YES_NO_OPTION); 
-			if (selectedOption == JOptionPane.YES_OPTION) {
+			
+			//default title and icon
+			JOptionPane.showMessageDialog(null,
+			    "Shader Tool will download the shaders info, could take some minutes");
+			
+			//int selectedOption = JOptionPane.showConfirmDialog(null, 
+            //        "Shader Tool needs to download all the repo data in order to continue", 
+            //        "Choose", 
+            //        JOptionPane.YES_NO_OPTION); 
+			//if (selectedOption == JOptionPane.YES_OPTION) {
 				
 				//Ini??
 				
@@ -217,10 +230,10 @@ public class Wizard  {
 		        listadata = search1.searchnames;
 		        prueba =  search1.searchfolder;
 				
-			}else {
+			//}else {
 				
 			
-			}
+			//}
 		}
         
         //Initial values
@@ -413,8 +426,9 @@ public class Wizard  {
        upload.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
            	
+                    	
             	try {
-					Upload Upload = new Upload(editor, pathos, card2, listadata);
+					Upload Upload = new Upload(editor, pathos, card2, listadata, updatecheck);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -476,6 +490,9 @@ public class Wizard  {
       update.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
           	
+        	   
+        		   
+        	   
            	try {
 					Pull pull = new Pull(pathos, editor);
 				} catch (IOException e1) {
@@ -495,7 +512,7 @@ public class Wizard  {
 					e1.printStackTrace();
 				} 
            	
-           	
+        	      
            } 
           
        });
@@ -567,18 +584,47 @@ public class Wizard  {
             int index = sourceTabbedPane.getSelectedIndex();
             if (sourceTabbedPane.getTitleAt(index)=="Upload");
             {
-            	try {
-					Upload Upload = new Upload(editor, pathos, card2, listadata);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (TransportException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (GitAPIException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} 
+            
+            	
+        		if (updatecheck == true){
+                	
+            		          		
+            	 	try {
+    					Upload Upload = new Upload(editor, pathos, card2, listadata, updatecheck);
+    				} catch (IOException e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				} catch (TransportException e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				} catch (GitAPIException e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				} 
+            		
+            	}
+            	
+            	
+            	if (updatecheck == false){
+            		
+            		
+            		try {
+    					UploadNU UploadNU = new UploadNU(editor, pathos, card2, listadata, updatecheck);
+    				} catch (IOException e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				} catch (TransportException e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				} catch (GitAPIException e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				} 
+            		
+            		
+            	}
+            	
+          
             }
             
             

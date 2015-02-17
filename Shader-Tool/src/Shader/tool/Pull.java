@@ -105,28 +105,8 @@ class Pull {
      	
         Git gitlocal = new Git (repositorylocal);
         
-        //PUSH N
-      
-        /*
-        PushCommand pc = gitlocal.push();
-		pc.setCredentialsProvider(cp)
-		.setForce(true)
-		.setPushAll();
-		Iterator<PushResult> it;
-		try {
-			it = pc.call().iterator();
-			if(it.hasNext()){
-				System.out.println(it.next().toString());
-				}
-		} catch (TransportException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (GitAPIException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+           
         
-        */
         
         //GIT REMOTE & LOCAL
         
@@ -217,7 +197,28 @@ class Pull {
         	
         
         localPath.deleteOnExit();
-        		       
+     
+ //PUSH N
+      
+        
+        PushCommand pc = gitlocal.push();
+		pc.setCredentialsProvider(cp)
+		.setForce(true)
+		.setPushAll();
+		Iterator<PushResult> it;
+		try {
+			it = pc.call().iterator();
+			if(it.hasNext()){
+				System.out.println(it.next().toString());
+				}
+		} catch (TransportException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GitAPIException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//End Push 
+        
 
 	}
 	
