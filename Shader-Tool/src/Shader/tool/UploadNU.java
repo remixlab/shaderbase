@@ -352,8 +352,7 @@ class UploadNU{
                 	 
                 	 int selectedOption1 = JOptionPane.showConfirmDialog(null, 
                              "Do you want to share the shader with other users??\n"+ 
-                             "The shader will be uploaded in the next ShaderTool\n"+ 
-                             "update", 
+                             "The shader will be uploaded in the next update\n", 
                              "Choose", 
                              JOptionPane.YES_NO_OPTION); 
              		if (selectedOption1 == JOptionPane.YES_OPTION) {
