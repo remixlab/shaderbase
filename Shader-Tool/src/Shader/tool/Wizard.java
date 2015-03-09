@@ -51,13 +51,16 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.errors.NoWorkTreeException;
 
 
+import processing.app.Base;
 import processing.app.Editor;
+import processing.app.Sketch;
 
 
 
@@ -323,9 +326,48 @@ public class Wizard  {
         
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-           	
-            	Save save = new Save(shaderse,editor,shadersename); 
-            	System.out.println("Loading .....");
+            	
+            	String sketchcode = null;
+            	boolean check;
+            	editor.getBase();
+            	editor.getBase();
+    			//System.out.println(pdecode);
+    			sketchcode = editor.getText();	
+    			if (sketchcode.isEmpty()){
+            	            	
+    				Save save = new Save(shaderse,editor,shadersename); 
+    				System.out.println("Loading .....");
+    			
+    			}else{
+    				
+    				int selectedOption1 = JOptionPane.showConfirmDialog(null,  
+    						 "The sketch has a code if you proceed \n"
+    						 + "the code will be deleted\n"
+    		    			 + "Do you want to continue?", 
+    		                 "Choose",
+    		                 JOptionPane.WARNING_MESSAGE,
+    		                 JOptionPane.YES_NO_OPTION); 
+    				
+    		        if (selectedOption1 == JOptionPane.YES_OPTION) {
+    				
+    		        	Sketch sketch = editor.getSketch();
+    		        	File sketchFolder = sketch.getFolder();
+            			String folderpath = sketchFolder.toString();
+            			File Folder = new File(folderpath+"/data");
+            			try {
+							FileUtils.cleanDirectory(Folder);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}   
+    					
+            			Save save = new Save(shaderse,editor,shadersename); 
+        				System.out.println("Loading .....");
+    					
+    				}
+    			}
+    			
+    			
             	
             } 
            
