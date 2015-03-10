@@ -805,10 +805,7 @@ class UploadNU{
 		}
         
         
-		}
-		
-		
-        }else {//END IF PDE
+		}else {//END IF PDE
         	JOptionPane.showMessageDialog(null,
 				     "The sketch doesn't contains a PShader class, there isn't any shader in code," +
 				     "please check your sketch code"
@@ -817,6 +814,9 @@ class UploadNU{
 				 	    JOptionPane.ERROR_MESSAGE); //Tipo de mensaje
         
         }//ELSE PDE
+		
+		
+        }
             
         }//else 
         else {//ADD LOCAL

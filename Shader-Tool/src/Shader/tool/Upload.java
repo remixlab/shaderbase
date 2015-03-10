@@ -76,6 +76,7 @@ import static javax.swing.GroupLayout.Alignment.*;
 import processing.app.Base;
 import processing.app.Editor;
 import processing.app.Sketch;
+import processing.app.SketchCode;
 
 class Upload{
 	
@@ -489,11 +490,24 @@ class Upload{
             			
             			Sketch sketch = editor.getSketch();
             			File sketchFolder = sketch.getFolder();
+            			
             			File sketchbookFolder = Base.getSketchbookFolder();
             			folderpath = sketchFolder.toString();
             			
+            			
             			System.out.println(folderpath);
+            			
+            			/*
+            			//
+            			int sketch11 = sketch.getCodeCount(); //Numero Tabs
+            			sketch.handleNextCode();
+            			String sketch111 = editor.getText();
+            			
+            			System.out.println("Cuenta algo" + sketch11 + sketch111);
+            			//
                  	
+                 		*/
+            			
              		}catch(Exception excp){
             		}
             	
@@ -803,10 +817,7 @@ class Upload{
 		}
         
         
-		}
-		
-		
-        }else {//END IF PDE
+		}else {//END IF PDE
         	JOptionPane.showMessageDialog(null,
 				     "The sketch doesn't contains a PShader class, there isn't any shader in code," +
 				     "please check your sketch code"
@@ -815,6 +826,9 @@ class Upload{
 				 	    JOptionPane.ERROR_MESSAGE); //Tipo de mensaje
         
         }//ELSE PDE
+		
+		
+        }
             
         }//else 
         else {//ADD LOCAL
@@ -852,7 +866,6 @@ class Upload{
     			editor.getBase();
     			//System.out.println(pdecode);
     			pdecode = editor.getText();
-    			
     			Sketch sketch = editor.getSketch();
     			File sketchFolder = sketch.getFolder();
     			File sketchbookFolder = Base.getSketchbookFolder();
