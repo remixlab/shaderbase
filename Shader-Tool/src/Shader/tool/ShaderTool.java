@@ -1,4 +1,3 @@
-
 /**
  * you can put a one sentence description of your tool here.
  *
@@ -28,24 +27,15 @@ package Shader.tool;
 
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.TransportException;
-
-import processing.app.*;
 import processing.app.tools.*;
 import processing.app.Base;
 import processing.app.Editor;
 import processing.app.Sketch;
-import processing.app.SketchCode;
-import processing.core.PApplet;
 import Shader.tool.Wizard;
-import Shader.tool.Save;
-
  
 /**
  * GUI tool for shader tool
