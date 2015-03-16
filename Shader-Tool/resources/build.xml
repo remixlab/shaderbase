@@ -1,4 +1,4 @@
-<project name="ProcessingTools" default="clean" basedir="../">
+<project name="ShaderTool" default="clean" basedir="../">
 
     
 <!--	
