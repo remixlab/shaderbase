@@ -2,18 +2,18 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/pde.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/core.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/commons-io-2.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/commons-io-2.4-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/JavaEWAH-0.5.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/JavaEWAH-0.5.6-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/jsch-0.1.46.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/jsch-0.1.46-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/lucene-analyzers-common-4.7.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/lucene-core-4.7.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/lucene-queryparser-4.7.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/org.eclipse.jgit-3.3.2.201404171909-r.jar"/>
-	<classpathentry kind="lib" path="C:/Users/MI EQUIPO/Downloads/eclipse-java-juno-SR2-win32-x86_64/eclipse/libs/org.eclipse.jgit-3.3.2.201404171909-r-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.4-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/core.jar"/>
+	<classpathentry kind="lib" path="lib/JavaEWAH-0.5.6-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/JavaEWAH-0.5.6.jar"/>
+	<classpathentry kind="lib" path="lib/jsch-0.1.46-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/jsch-0.1.46.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-analyzers-common-4.7.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-core-4.7.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-queryparser-4.7.0.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.jgit-3.3.2.201404171909-r-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.jgit-3.3.2.201404171909-r.jar"/>
+	<classpathentry kind="lib" path="lib/pde.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
