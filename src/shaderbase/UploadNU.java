@@ -1,13 +1,11 @@
-package Shader.tool;
+package shaderbase;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import processing.app.Editor;
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.eclipse.jgit.api.CommitCommand;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.PushCommand;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
@@ -19,7 +17,6 @@ import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.jgit.transport.PushResult;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import java.awt.Dimension;
 import java.io.BufferedWriter;
@@ -51,7 +48,7 @@ import static javax.swing.GroupLayout.Alignment.*;
 import processing.app.Base;
 import processing.app.Sketch;
 
-class Upload {
+class UploadNU {
 
   private static final String String = null;
   String pdecode;
@@ -62,7 +59,7 @@ class Upload {
 
   // public Upload(String shaderse, Editor editor, String shadersename)
 
-  public Upload(final Editor editor, final Path pathos, JPanel card2,
+  public UploadNU(final Editor editor, final Path pathos, JPanel card2,
       String[] listadata, boolean updatecheck) throws IOException,
       TransportException, GitAPIException {
 
@@ -291,8 +288,9 @@ class Upload {
         } else {
 
           int selectedOption1 = JOptionPane.showConfirmDialog(null,
-              "Do you want to share the shader with other users??", "Choose",
-              JOptionPane.YES_NO_OPTION);
+              "Do you want to share the shader with other users??\n"
+                  + "The shader will be uploaded in the next update\n",
+              "Choose", JOptionPane.YES_NO_OPTION);
           if (selectedOption1 == JOptionPane.YES_OPTION) {
 
             // ///
@@ -405,18 +403,10 @@ class Upload {
 
                 Sketch sketch = editor.getSketch();
                 File sketchFolder = sketch.getFolder();
-
                 File sketchbookFolder = Base.getSketchbookFolder();
                 folderpath = sketchFolder.toString();
 
                 System.out.println(folderpath);
-
-                /*
-                 * // int sketch11 = sketch.getCodeCount(); //Numero Tabs
-                 * sketch.handleNextCode(); String sketch111 = editor.getText();
-                 * 
-                 * System.out.println("Cuenta algo" + sketch11 + sketch111); //
-                 */
 
               } catch (Exception excp) {
               }
@@ -648,34 +638,31 @@ class Upload {
                     e1.printStackTrace();
                   }// End REINDEX
 
-                  int selectedOption = JOptionPane.showConfirmDialog(null,
-                      "Do you want to upload the shader now??", "Choose",
-                      JOptionPane.YES_NO_OPTION);
-                  if (selectedOption == JOptionPane.YES_OPTION) {
-
-                    PushCommand pc = git.push();
-                    pc.setCredentialsProvider(cp).setForce(true).setPushAll();
-                    Iterator<PushResult> it;
-                    try {
-                      it = pc.call().iterator();
-                      if (it.hasNext()) {
-                        System.out.println(it.next().toString());
-                      }
-                    } catch (TransportException e) {
-                      // TODO Auto-generated catch block
-                      e.printStackTrace();
-                    } catch (GitAPIException e) {
-                      // TODO Auto-generated catch block
-                      e.printStackTrace();
-                    }
-
-                  }
-
-                  // PUSH
                   /*
+                   * int selectedOption = JOptionPane.showConfirmDialog(null,
+                   * "Do you want to upload the shader now??", "Choose",
+                   * JOptionPane.YES_NO_OPTION); if (selectedOption ==
+                   * JOptionPane.YES_OPTION) {
+                   * 
+                   * 
                    * PushCommand pc = git.push(); pc.setCredentialsProvider(cp)
                    * .setForce(true) .setPushAll(); Iterator<PushResult> it; try
                    * { it = pc.call().iterator(); if(it.hasNext()){
+                   * System.out.println(it.next().toString()); } } catch
+                   * (TransportException e) { // TODO Auto-generated catch block
+                   * e.printStackTrace(); } catch (GitAPIException e) { // TODO
+                   * Auto-generated catch block e.printStackTrace(); }
+                   * 
+                   * 
+                   * 
+                   * 
+                   * }
+                   * 
+                   * 
+                   * // PUSH /* PushCommand pc = git.push();
+                   * pc.setCredentialsProvider(cp) .setForce(true)
+                   * .setPushAll(); Iterator<PushResult> it; try { it =
+                   * pc.call().iterator(); if(it.hasNext()){
                    * System.out.println(it.next().toString()); } } catch
                    * (TransportException e) { // TODO Auto-generated catch block
                    * e.printStackTrace(); } catch (GitAPIException e) { // TODO
@@ -732,6 +719,7 @@ class Upload {
                 editor.getBase();
                 // System.out.println(pdecode);
                 pdecode = editor.getText();
+
                 Sketch sketch = editor.getSketch();
                 File sketchFolder = sketch.getFolder();
                 File sketchbookFolder = Base.getSketchbookFolder();

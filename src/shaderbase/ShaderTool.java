@@ -23,19 +23,22 @@
  * @version		##version##
  */
 
-package Shader.tool;
+package shaderbase;
 
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.JFrame;
+
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.TransportException;
+
 import processing.app.tools.*;
 import processing.app.Base;
 import processing.app.Editor;
 import processing.app.Sketch;
-import Shader.tool.Wizard;
+import shaderbase.Wizard;
  
 /**
  * GUI tool for shader tool

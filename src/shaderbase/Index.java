@@ -1,4 +1,4 @@
-package Shader.tool;
+package shaderbase;
 
 import java.nio.file.Path;
 import org.apache.lucene.analysis.Analyzer;

@@ -1,4 +1,4 @@
-package Shader.tool;
+package shaderbase;
 
 import java.io.BufferedReader;
 import java.io.File;
