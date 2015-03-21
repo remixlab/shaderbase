@@ -1,15 +1,15 @@
-Welcome to the Processing ShaderTool!
+Welcome to the Processing ShaderBase!
 ===================
 
 ## About
 
-*ShaderTool*  is a free software tool developed for [Processing](http://www.processing.org/) with the idea of creating a structured database of 
+*ShaderBase*  is a free software tool developed for [Processing](http://www.processing.org/) with the idea of creating a structured database of 
 shaders made by any user, from the web and any other source that allows to export and import shaders from the database to *Processing* and run them.
 
 With the idea of helping the user finding a shader inside the database a search engine was implemented with the use of tags and other relevant
-information trying to return an accurate search result about the shaders inside the database. All the information and data inside *ShaderTool*
+information trying to return an accurate search result about the shaders inside the database. All the information and data inside *ShaderBase*
 is hold in another [Github repository](https://github.com/remixlab/shaderdb). The main idea is to send all the shaders information
-from *Processing* to Github with *ShaderTool*.
+from *Processing* to Github with *ShaderBase*.
 
 ## Working OS
 
@@ -20,7 +20,7 @@ from *Processing* to Github with *ShaderTool*.
 ## Installation
 
 1. Download ans install Processing from [here](http://www.processing.org/download) 
-2. Download the latest version of ShaderTool from [here](https://github.com/remixlab/shader_tool/releases/download/v-1.0.0-alpha.1/shadertool-1.0.0-alpha1.zip)
+2. Download the latest version of ShaderBase from [here](https://github.com/remixlab/shaderbase/releases/download/v-1.0.0-alpha.1/shadertool-1.0.0-alpha1.zip)
 3. Extract the zip file to the Processing default tool folder location
 (the location of the sketchbook folder is shown in the Processing's Preferences dialog). If not already present, create a folder named "tools" inside your Sketchbook folder.
 4. Restart Processing.
@@ -56,14 +56,14 @@ you upload other shader (commit).
 ### Notes
 
 * Uploading shaders from multiple tabs isn't supported yet.
-* The ShaderTool will ask you to update your local db every time it's loaded. Do it everytime you plan to update
+* The ShaderBase will ask you to update your local db every time it's loaded. Do it everytime you plan to update
 your own shaders to the [ShaderDB repository](https://github.com/remixlab/shaderdb) to avoid possible conflicts with other users' updates.
-it is recommended to update every time you start ShaderTool.
+it is recommended to update every time you start ShaderBase.
 * If you use a shader name that already exits, the older shader will be edited.
 
 ## License
 
-The ShaderTool is released under the terms of the [GPL-v3](http://www.gnu.org/licenses/gpl.html). All the shaders are released by:
+The ShaderBase is released under the terms of the [GPL-v3](http://www.gnu.org/licenses/gpl.html). All the shaders are released by:
 
 
 [![](http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US)
