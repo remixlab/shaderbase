@@ -44,7 +44,7 @@ import shaderbase.Wizard;
  * GUI tool for shader tool
  */
 
-public class ShaderTool extends JFrame implements Tool{ 
+public class ShaderBase extends JFrame implements Tool{ 
  //public class ShaderTool implements Tool {
 	private processing.app.Editor editor;	
 	private Wizard info;
@@ -55,7 +55,7 @@ public class ShaderTool extends JFrame implements Tool{
 	
 
 public String getMenuTitle() {
-	    return "Shader Tool";
+	    return "ShaderBase";
 }
 
 public void init(Editor editor) {
@@ -79,7 +79,7 @@ public void run() {
 			File sketchbookFolder = Base.getSketchbookFolder();
 			
 	        //Create and set up the window.
-	        JFrame frame = new JFrame("Shader Tool");
+	        JFrame frame = new JFrame("ShaderBase");
 	        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	 
 	        //Create and set up the content pane.
