@@ -300,7 +300,7 @@ class Upload {
 						 * 
 						 * if (rVal !=0) { JOptionPane.showMessageDialog(null,
 						 * "Using default image" , //Mensaje "Default Image",
-						 * //Título JOptionPane.WARNING_MESSAGE); //Tipo de
+						 * //Titulo JOptionPane.WARNING_MESSAGE); //Tipo de
 						 * mensaje
 						 * 
 						 * imgpath = pathos.toString();
@@ -316,7 +316,7 @@ class Upload {
 					else {
 						JOptionPane.showMessageDialog(null,
 								"Using default image", // Mensaje
-								"Default Image", // Título
+								"Default Image", // Titulo
 								JOptionPane.WARNING_MESSAGE); // Tipo de mensaje
 
 						imgpath = pathos.toString();
@@ -821,7 +821,7 @@ class Upload {
 							if (dirdatainfo == null) {
 								JOptionPane.showMessageDialog(null,
 										"The data folder is empty", // Mensaje
-										"No files in data folder", // Título
+										"No files in data folder", // Titulo
 										JOptionPane.WARNING_MESSAGE); // Tipo de
 																		// mensaje
 								try {
@@ -1037,7 +1037,7 @@ class Upload {
 						JOptionPane.showMessageDialog(null,
 								"The sketch doesn't contains a PShader class, there isn't any shader in code,"
 										+ "please check your sketch code", // Mensaje
-								"PShader Missing", // Título
+								"PShader Missing", // Titulo
 								JOptionPane.ERROR_MESSAGE); // Tipo de mensaje
 
 					}// ELSE PDE
