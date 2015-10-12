@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import processing.app.Base;
-import processing.app.Editor;
+import processing.app.ui.Editor;
 import processing.app.Sketch;
 
 class Save{

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.queryparser.classic.ParseException;
-import processing.app.Editor;
+import processing.app.ui.Editor;
 
 class Delete {
 

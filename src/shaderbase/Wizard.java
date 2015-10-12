@@ -53,7 +53,7 @@ import org.eclipse.jgit.errors.NoWorkTreeException;
 
 
 
-import processing.app.Editor;
+import processing.app.ui.Editor;
 import processing.app.Sketch;
 import processing.app.SketchCode;
 
