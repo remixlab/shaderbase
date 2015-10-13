@@ -2,7 +2,7 @@ package shaderbase;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import processing.app.Editor;
+import processing.app.ui.Editor;
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.eclipse.jgit.api.CommitCommand;

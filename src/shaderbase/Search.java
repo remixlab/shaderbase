@@ -21,7 +21,7 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
-import processing.app.Editor;
+import processing.app.ui.Editor;
 
 class Search {
 

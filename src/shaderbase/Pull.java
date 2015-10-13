@@ -6,7 +6,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
-import processing.app.Editor;
+import processing.app.ui.Editor;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PullResult;

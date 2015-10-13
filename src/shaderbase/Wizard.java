@@ -53,7 +53,8 @@ import org.eclipse.jgit.errors.NoWorkTreeException;
 
 
 
-import processing.app.Editor;
+import processing.app.ui.Editor;
+import processing.app.Base;
 import processing.app.Sketch;
 import processing.app.SketchCode;
 
@@ -114,19 +115,30 @@ public class Wizard {
 		// Prints OS
 		// System.out.println(OS);
 
+		File sketchbookFolder = Base.getSketchbookFolder();
+		System.out.println("Test");
+		System.out.println(sketchbookFolder);
+		System.out.println("End Test");
+		
+		
 		if (isWindows()) {
 			System.out.println("Windows");
-			pathos = Paths.get(System.getProperty("user.home"),
-					"Documents/Processing/tools/ShaderBase/tool/Shaderepo");
-
+			//pathos = Paths.get(System.getProperty("user.home"),
+			//		"Documents/Processing/tools/ShaderBase/tool/Shaderepo");
+			String pathostring = sketchbookFolder.toString() + "/tools/ShaderBase/tool/Shaderepo";
+			pathos = Paths.get(pathostring);
 		} else if (isMac()) {
 			System.out.println("Mac iOS");
-			pathos = Paths.get(System.getProperty("user.home"),
-					"Documents/Processing/tools/ShaderBase/tool/Shaderepo");
+			//pathos = Paths.get(System.getProperty("user.home"),
+			//		"Documents/Processing/tools/ShaderBase/tool/Shaderepo");
+			String pathostring = sketchbookFolder.toString() + "/tools/ShaderBase/tool/Shaderepo";
+			pathos = Paths.get(pathostring);
 		} else if (isUnix()) {
 			System.out.println("Linux");
-			pathos = Paths.get(System.getProperty("user.home"),
-					"sketchbook/tools/ShaderBase/tool/Shaderepo");
+			//pathos = Paths.get(System.getProperty("user.home"),
+			//		"sketchbook/tools/ShaderBase/tool/Shaderepo");
+			String pathostring = sketchbookFolder.toString() + "/tools/ShaderBase/tool/Shaderepo";
+			pathos = Paths.get(pathostring);
 		} else if (isSolaris()) {
 			System.out.println("Solaris");
 		} else {

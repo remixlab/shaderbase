@@ -36,7 +36,7 @@ import org.eclipse.jgit.api.errors.TransportException;
 
 import processing.app.tools.*;
 import processing.app.Base;
-import processing.app.Editor;
+import processing.app.ui.Editor;
 import processing.app.Sketch;
 import shaderbase.Wizard;
  
@@ -46,9 +46,10 @@ import shaderbase.Wizard;
 
 public class ShaderBase extends JFrame implements Tool{ 
  //public class ShaderTool implements Tool {
-	private processing.app.Editor editor;	
+	//private processing.app.ui.Editor editor;	
+	private processing.app.Base base;
 	private Wizard info;
-  //Editor editor;
+    //Editor editor;
  
  //Variables 
 
@@ -58,8 +59,8 @@ public String getMenuTitle() {
 	    return "ShaderBase";
 }
 
-public void init(Editor editor) {
-this.editor = editor;
+public void init(Base base) {
+this.base = base;
 }
 
 //public void init(processing.app.Editor theEditor) {
@@ -73,7 +74,8 @@ this.editor = editor;
 
 
 public void run() {
-	
+			
+			Editor editor = base.getActiveEditor();
 			Sketch sketch = editor.getSketch();
 			File sketchFolder = sketch.getFolder();
 			File sketchbookFolder = Base.getSketchbookFolder();
