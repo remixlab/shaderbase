@@ -33,7 +33,6 @@ import org.eclipse.jgit.api.errors.TransportException;
 import processing.app.tools.*;
 import processing.app.Base;
 import processing.app.ui.Editor;
-import processing.app.Sketch;
 import shaderbase.Wizard;
 
 /**
@@ -41,6 +40,11 @@ import shaderbase.Wizard;
  */
 @SuppressWarnings("serial")
 public class ShaderBase extends JFrame implements Tool{ 
+  static final protected String username = "shaderuser";
+  static final protected String password = "allyourshadersbelongtous";
+  static final protected String repoURL = "https://github.com/remixlab/shaderdb.git"; 
+  
+  
   //public class ShaderTool implements Tool {
   //private processing.app.ui.Editor editor;	
   private processing.app.Base base;

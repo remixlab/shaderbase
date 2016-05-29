@@ -17,17 +17,14 @@ class Clone {
   GitAPIException, IOException {
 
     String repo = pathos.toString() + "/Data";
-    String name = "shaderuser";
-    String password = "allyourshadersbelongtous";
-    String url = "https://github.com/remixlab/shaderdb.git";
 
     // credentials
-    CredentialsProvider cp = new UsernamePasswordCredentialsProvider(name,
-        password);
+    CredentialsProvider cp = new UsernamePasswordCredentialsProvider(
+        ShaderBase.username, ShaderBase.password);
     // clone
     File dir = new File(repo);
     CloneCommand cc = new CloneCommand().setCredentialsProvider(cp)
-        .setDirectory(dir).setURI(url);
+        .setDirectory(dir).setURI(ShaderBase.repoURL);
     Git git = cc.call();
     // add
     AddCommand ac = git.add();

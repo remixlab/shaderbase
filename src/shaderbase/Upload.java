@@ -88,9 +88,6 @@ class Upload {
     // Path path = pathos;
     final String repo = pathos.toString() + "/Data";
     final File dir = new File(repo);
-    final String name = "shaderuser";
-    final String password = "allyourshadersbelongtous";
-    String url = "https://github.com/remixlab/shaderdb.git";
     final boolean update = updatecheck;
 
     // GUI
@@ -652,7 +649,7 @@ class Upload {
 
               // credentials
               CredentialsProvider cp = new UsernamePasswordCredentialsProvider(
-                  name, password);
+                  ShaderBase.username, ShaderBase.password);
 
               // FOLDERS
 
