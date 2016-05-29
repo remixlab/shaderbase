@@ -61,7 +61,7 @@ class UploadNU {
 
   public UploadNU(final Editor editor, final Path pathos, JPanel card2,
       String[] listadata, boolean updatecheck) throws IOException,
-      TransportException, GitAPIException {
+  TransportException, GitAPIException {
 
     // String path = shaderse;
     final String[] listadata2 = listadata;
@@ -120,76 +120,76 @@ class UploadNU {
     layout.setAutoCreateContainerGaps(true);
 
     layout.setHorizontalGroup(layout.createSequentialGroup()
-    // .addComponent(namel)
-    // .addComponent(namet)
+        // .addComponent(namel)
+        // .addComponent(namet)
         .addGroup(
             layout
-                .createParallelGroup(LEADING)
+            .createParallelGroup(LEADING)
 
-                .addGroup(
-                    layout.createSequentialGroup().addComponent(namel)
-                        .addComponent(namet))
-                .addGroup(layout.createSequentialGroup()
+            .addGroup(
+                layout.createSequentialGroup().addComponent(namel)
+                .addComponent(namet))
+            .addGroup(layout.createSequentialGroup()
                 // .addGroup(layout.createParallelGroup(LEADING)
 
-                    .addComponent(tagl).addComponent(tagt))
-                .addGroup(layout.createSequentialGroup()
+                .addComponent(tagl).addComponent(tagt))
+            .addGroup(layout.createSequentialGroup()
 
                 // .addGroup(layout.createParallelGroup(LEADING)
 
-                    .addComponent(desl).addComponent(dest))
-                .addGroup(layout.createSequentialGroup()
+                .addComponent(desl).addComponent(dest))
+            .addGroup(layout.createSequentialGroup()
                 // .addGroup(layout.createParallelGroup(LEADING)
-                    .addComponent(authorl).addComponent(authort))
-                .addGroup(layout.createSequentialGroup()
+                .addComponent(authorl).addComponent(authort))
+            .addGroup(layout.createSequentialGroup()
                 // .addGroup(layout.createParallelGroup(LEADING)
-                    .addComponent(emaill).addComponent(emailt))
+                .addComponent(emaill).addComponent(emailt))
 
-                .addGroup(
-                    layout.createSequentialGroup()
-                        // .addGroup(layout.createParallelGroup(LEADING)
-                        .addComponent(imagel).addComponent(imgb)
-                        .addComponent(noimg)
+            .addGroup(
+                layout.createSequentialGroup()
+                // .addGroup(layout.createParallelGroup(LEADING)
+                .addComponent(imagel).addComponent(imgb)
+                .addComponent(noimg)
                 // .addComponent(noremote)
                 )
 
-                .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 // .addGroup(layout.createParallelGroup(LEADING)
-                    .addComponent(commitb))
-        // .addComponent(pushb))
+                .addComponent(commitb))
+            // .addComponent(pushb))
 
-        ));
+            ));
 
     layout.setVerticalGroup(layout
         .createSequentialGroup()
 
         .addGroup(
             layout.createParallelGroup(BASELINE).addComponent(namel)
-                .addComponent(namet))
+            .addComponent(namet))
         .addGroup(
             layout.createParallelGroup(BASELINE).addComponent(tagl)
-                .addComponent(tagt))
+            .addComponent(tagt))
 
         .addGroup(
             layout.createParallelGroup(BASELINE).addComponent(desl)
-                .addComponent(dest))
+            .addComponent(dest))
 
         .addGroup(
             layout.createParallelGroup(BASELINE).addComponent(authorl)
-                .addComponent(authort))
+            .addComponent(authort))
 
         .addGroup(
             layout.createParallelGroup(BASELINE).addComponent(emaill)
-                .addComponent(emailt))
+            .addComponent(emailt))
 
         .addGroup(
             layout.createParallelGroup(BASELINE).addComponent(imagel)
-                .addComponent(noimg).addComponent(imgb)
-        // .addComponent(noremote)
-        )
+            .addComponent(noimg).addComponent(imgb)
+            // .addComponent(noremote)
+            )
 
         .addGroup(layout.createParallelGroup(BASELINE).addComponent(commitb))
-    // .addComponent(pushb))
+        // .addComponent(pushb))
 
         );
     panel.setPreferredSize(new Dimension(800, 480));
@@ -290,7 +290,7 @@ class UploadNU {
           int selectedOption1 = JOptionPane.showConfirmDialog(null,
               "Do you want to share the shader with other users??\n"
                   + "The shader will be uploaded in the next update\n",
-              "Choose", JOptionPane.YES_NO_OPTION);
+                  "Choose", JOptionPane.YES_NO_OPTION);
           if (selectedOption1 == JOptionPane.YES_OPTION) {
 
             // ///
@@ -329,9 +329,9 @@ class UploadNU {
 
                     try {
                       git.rm()
-                          .addFilepattern(
-                              "ShaderData/" + a1 + "/Code/" + dirdatainfo[x])
-                          .call();
+                      .addFilepattern(
+                          "ShaderData/" + a1 + "/Code/" + dirdatainfo[x])
+                      .call();
                     } catch (NoFilepatternException e) {
                       // TODO Auto-generated catch block
                       e.printStackTrace();
@@ -344,7 +344,7 @@ class UploadNU {
 
                   CommitCommand commit = git.commit();
                   commit.setCommitter(authort.getText(), emailt.getText())
-                      .setMessage(dest.getText());
+                  .setMessage(dest.getText());
                   try {
                     commit.call();
                   } catch (NoHeadException e) {
@@ -582,27 +582,27 @@ class UploadNU {
                     // TXT
 
                     git.add()
-                        .addFilepattern("ShaderData/" + a1 + "/" + a1 + ".txt")
-                        .call();
+                    .addFilepattern("ShaderData/" + a1 + "/" + a1 + ".txt")
+                    .call();
 
                     // PDE
                     git.add()
-                        .addFilepattern("ShaderData/" + a1 + "/" + a1 + ".pde")
-                        .call();
+                    .addFilepattern("ShaderData/" + a1 + "/" + a1 + ".pde")
+                    .call();
                     // DATA FOLDER
 
                     for (int x = 0; x < dirdatainfo.length; x++) {
                       git.add()
-                          .addFilepattern(
-                              "ShaderData/" + a1 + "/Code/" + dirdatainfo[x])
-                          .call();
+                      .addFilepattern(
+                          "ShaderData/" + a1 + "/Code/" + dirdatainfo[x])
+                      .call();
                       // System.out.println(dirdatainfo[x]);
                     }
 
                     // IMG
                     git.add()
-                        .addFilepattern("ShaderData/" + a1 + "/" + a1 + ".jpg")
-                        .call();
+                    .addFilepattern("ShaderData/" + a1 + "/" + a1 + ".jpg")
+                    .call();
 
                   } catch (NoFilepatternException e1) {
                     // TODO Auto-generated catch block
@@ -618,7 +618,7 @@ class UploadNU {
                   // commit
                   CommitCommand commit = git.commit();
                   commit.setCommitter(authort.getText(), emailt.getText())
-                      .setMessage(dest.getText());
+                  .setMessage(dest.getText());
                   try {
                     commit.call();
                   } catch (UnmergedPathsException e) {
@@ -679,8 +679,8 @@ class UploadNU {
                 JOptionPane.showMessageDialog(null,
                     "The sketch doesn't contains a PShader class, there isn't any shader in code,"
                         + "please check your sketch code", // Mensaje
-                    "PShader Missing", // T�tulo
-                    JOptionPane.ERROR_MESSAGE); // Tipo de mensaje
+                        "PShader Missing", // T�tulo
+                        JOptionPane.ERROR_MESSAGE); // Tipo de mensaje
 
               }// ELSE PDE
 
@@ -878,7 +878,7 @@ class UploadNU {
 
     } // action listener
 
-    );// action listener
+        );// action listener
 
   }// public Upload
 

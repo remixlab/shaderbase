@@ -42,7 +42,7 @@ class Index {
     boolean create = true;
     if (!docDir.exists() || !docDir.canRead()) {
       System.out.println("Document directory '" + docDir.getAbsolutePath()
-          + "' does not exist or is not readable, please check the path");
+      + "' does not exist or is not readable, please check the path");
       System.exit(1);
     }
 

@@ -13,9 +13,8 @@ import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 class Clone {
-
   public Clone(String args[], Path pathos) throws TransportException,
-      GitAPIException, IOException {
+  GitAPIException, IOException {
 
     String repo = pathos.toString() + "/Data";
     String name = "Shadertool";

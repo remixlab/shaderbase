@@ -8,7 +8,6 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import processing.app.ui.Editor;
 
 class Delete {
-
   private static final String String = null;
   String pdecode;
   String vertex;

@@ -189,7 +189,7 @@ public class Wizard {
 
 				// NO UPDATE
 				JOptionPane.showMessageDialog(null,
-						"ShaderBase will Upload any shader after next update",
+						"ShaderBase will upload new shaders after next update",
 						"Inane warning", JOptionPane.WARNING_MESSAGE);
 
 				updatecheck = false;

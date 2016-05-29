@@ -37,7 +37,7 @@ class Search {
 
   public Search(String[] searchid2, String[] searchnames2, Editor editor,
       Path pathos, String[] searchfolder2, String searchin2)
-      throws ParseException {
+          throws ParseException {
     // TODO Auto-generated constructor stub
     this.editor = editor;
     p5 = pathos;
