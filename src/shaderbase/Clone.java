@@ -17,9 +17,9 @@ class Clone {
   GitAPIException, IOException {
 
     String repo = pathos.toString() + "/Data";
-    String name = "Shadertool";
-    String password = "1ergosum";
-    String url = "https://github.com/Shadertool/shaderdb.git";
+    String name = "shaderuser";
+    String password = "allyourshadersbelongtous";
+    String url = "https://github.com/remixlab/shaderdb.git";
 
     // credentials
     CredentialsProvider cp = new UsernamePasswordCredentialsProvider(name,

@@ -32,7 +32,7 @@ class Pull {
     final String repo = pathos.toString()+"/Data"; 
     final File dir = new File(repo);
 
-    String url = "https://github.com/Shadertool/shaderdb.git";
+    String url = "https://github.com/remixlab/shaderdb.git";
 
     //Repo Local
 
@@ -42,8 +42,8 @@ class Pull {
         .findGitDir() // scan up the file system tree
         .build();
 
-    final String name = "Shadertool";
-    final String password = "1ergosum";
+    final String name = "shaderuser";
+    final String password = "allyourshadersbelongtous";
     CredentialsProvider cp = new UsernamePasswordCredentialsProvider(name, password);
 
     Git gitlocal = new Git (repositorylocal);

@@ -125,19 +125,19 @@ public class Wizard {
 			System.out.println("Windows");
 			//pathos = Paths.get(System.getProperty("user.home"),
 			//		"Documents/Processing/tools/ShaderBase/tool/Shaderepo");
-			String pathostring = sketchbookFolder.toString() + "/tools/ShaderBase/tool/Shaderepo";
+			String pathostring = sketchbookFolder.toString() + "/tools/ShaderBase/tool/repo";
 			pathos = Paths.get(pathostring);
 		} else if (isMac()) {
 			System.out.println("Mac iOS");
 			//pathos = Paths.get(System.getProperty("user.home"),
 			//		"Documents/Processing/tools/ShaderBase/tool/Shaderepo");
-			String pathostring = sketchbookFolder.toString() + "/tools/ShaderBase/tool/Shaderepo";
+			String pathostring = sketchbookFolder.toString() + "/tools/ShaderBase/tool/repo";
 			pathos = Paths.get(pathostring);
 		} else if (isUnix()) {
 			System.out.println("Linux");
 			//pathos = Paths.get(System.getProperty("user.home"),
 			//		"sketchbook/tools/ShaderBase/tool/Shaderepo");
-			String pathostring = sketchbookFolder.toString() + "/tools/ShaderBase/tool/Shaderepo";
+			String pathostring = sketchbookFolder.toString() + "/tools/ShaderBase/tool/repo";
 			pathos = Paths.get(pathostring);
 		} else if (isSolaris()) {
 			System.out.println("Solaris");
