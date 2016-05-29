@@ -338,8 +338,7 @@ public class Wizard {
 		// textarea.append(descrip);
 		// card1.add(textarea); **
 		// card1.add(new JButton("Button 1"));
-		save = new JButton("Load");
-		// card1.add(save); **
+		save = new JButton("Download");
 		save.setEnabled(false);
 		delete = new JButton("Delete");
 		upload = new JButton("Upload");

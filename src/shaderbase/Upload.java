@@ -122,7 +122,7 @@ class Upload {
 		authort.setText("add your name or nickname");
 		final JTextField emailt = new JTextField();
 		emailt.setText("add your email (optional)");
-		final JButton commitb = new JButton("Save");
+		final JButton commitb = new JButton("Upload");
 		JButton pushb = new JButton("Remote rep");
 		final JButton imgb = new JButton("Load Image");
 		final JCheckBox noimg = new JCheckBox("Default Image");
