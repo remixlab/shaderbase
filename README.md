@@ -28,7 +28,7 @@ from *Processing* to Github with *ShaderBase*.
 
 ## Interface
 
-###Simple Search
+### Simple Search
 Shader Tool has a very simple interface.  
 <br/>
 ![Shader Tool Interface](https://raw.githubusercontent.com/anfgomezmo/ImageReadme/master/Images/Shader%20Tool/ShaderTool1.jpg)
@@ -41,9 +41,9 @@ The middle shows a small record of the shaders such as the uploader, tags or a s
 -->
 
 ### Upload
-<br/>
+
 ![Shader Tool Interface2](https://raw.githubusercontent.com/anfgomezmo/ImageReadme/master/Images/Shader%20Tool/ShaderTool2.jpg)
-<br/>
+
 
 If you want to upload a shader a sub-menu will appear. It is recommended that you fill all the fields since they are used to improve the
 semantic search queries.
